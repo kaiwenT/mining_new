@@ -50,7 +50,11 @@ public class IssueDao {
             criteria.andCreatorEqualTo(con.getUser());
         }
         if (!StringUtils.isBlank(con.getIssueName())) {
-            criteria.andIssueNameEqualTo(con.getIssueName());
+          //  criteria.andIssueNameEqualTo(con.getIssueName());
+        	criteria.andIssueNameLike("%"+con.getIssueName()+"%");
+        }
+        if (!StringUtils.isBlank(con.getIssueType())) {
+        	criteria.andIssueTypeEqualTo(con.getIssueType());
         }
         if (null != con.getCreateStartTime()) {
             criteria.andCreateTimeGreaterThanOrEqualTo(con.getCreateStartTime());
@@ -70,11 +74,42 @@ public class IssueDao {
         return issueMapper.selectByExample(example);
     }
 
+    public long queryIssueCount(IssueQueryCondition con){
+    	IssueExample example = new IssueExample();
+        Criteria criteria = example.createCriteria();
+        if (!StringUtils.isBlank(con.getIssueId())) {
+            criteria.andIssueIdEqualTo(con.getIssueId());
+        }
+        if (!StringUtils.isBlank(con.getUser())) {
+            criteria.andCreatorEqualTo(con.getUser());
+        }
+        if (!StringUtils.isBlank(con.getIssueName())) {
+            criteria.andIssueNameLike("%"+con.getIssueName()+"%");
+        }
+        if (!StringUtils.isBlank(con.getIssueType())) {
+        	criteria.andIssueTypeEqualTo(con.getIssueType());
+        }
+        if (null != con.getCreateStartTime()) {
+            criteria.andCreateTimeGreaterThanOrEqualTo(con.getCreateStartTime());
+        }
+        if (null != con.getCreateEndTime()) {
+            criteria.andCreateTimeLessThanOrEqualTo(con.getCreateEndTime());
+        }
+        if (null != con.getLastUpdateStartTime()) {
+            criteria.andLastUpdateTimeGreaterThanOrEqualTo(con.getLastUpdateStartTime());
+        }
+        if (null != con.getLastUpdateEndTime()) {
+            criteria.andLastUpdateTimeLessThanOrEqualTo(con.getLastUpdateEndTime());
+        }
+    	return issueMapper.countByExample(example);
+    }
+    
     public int deleteIssueById(String issueId, String user) {
         IssueExample example = new IssueExample();
         Criteria cri = example.createCriteria();
+        //System.out.println("删除的数据为"+issueId);
         cri.andIssueIdEqualTo(issueId);
-        cri.andCreatorEqualTo(user);
+        //cri.andCreatorEqualTo(user);
         return issueMapper.deleteByExample(example);
     }
 }

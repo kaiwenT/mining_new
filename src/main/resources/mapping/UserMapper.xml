@@ -1,257 +1,276 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hust.mining.dao.mapper.UserMapper">
-	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
-	<resultMap id="BaseResultMap" type="com.hust.mining.model.User">
-		<id column="user_id" jdbcType="INTEGER" property="userId" />
-		<result column="user_name" jdbcType="VARCHAR" property="userName" />
-		<result column="password" jdbcType="VARCHAR" property="password" />
-		<result column="email" jdbcType="VARCHAR" property="email" />
-		<result column="telphone" jdbcType="VARCHAR" property="telphone" />
-		<result column="true_name" jdbcType="VARCHAR" property="trueName" />
-		<result column="create_date" jdbcType="DATE" property="createDate" />
-	</resultMap>
-	<sql id="Example_Where_Clause">
-		<where>
-			<foreach collection="oredCriteria" item="criteria" separator="or">
-				<if test="criteria.valid">
-					<trim prefix="(" prefixOverrides="and" suffix=")">
-						<foreach collection="criteria.criteria" item="criterion">
-							<choose>
-								<when test="criterion.noValue">
-									and ${criterion.condition}
-								</when>
-								<when test="criterion.singleValue">
-									and ${criterion.condition} #{criterion.value}
-								</when>
-								<when test="criterion.betweenValue">
-									and ${criterion.condition} #{criterion.value} and
-									#{criterion.secondValue}
-								</when>
-								<when test="criterion.listValue">
-									and ${criterion.condition}
-									<foreach close=")" collection="criterion.value" item="listItem"
-										open="(" separator=",">
-										#{listItem}
-									</foreach>
-								</when>
-							</choose>
-						</foreach>
-					</trim>
-				</if>
-			</foreach>
-		</where>
-	</sql>
-	<sql id="Update_By_Example_Where_Clause">
-		<where>
-			<foreach collection="example.oredCriteria" item="criteria"
-				separator="or">
-				<if test="criteria.valid">
-					<trim prefix="(" prefixOverrides="and" suffix=")">
-						<foreach collection="criteria.criteria" item="criterion">
-							<choose>
-								<when test="criterion.noValue">
-									and ${criterion.condition}
-								</when>
-								<when test="criterion.singleValue">
-									and ${criterion.condition} #{criterion.value}
-								</when>
-								<when test="criterion.betweenValue">
-									and ${criterion.condition} #{criterion.value} and
-									#{criterion.secondValue}
-								</when>
-								<when test="criterion.listValue">
-									and ${criterion.condition}
-									<foreach close=")" collection="criterion.value" item="listItem"
-										open="(" separator=",">
-										#{listItem}
-									</foreach>
-								</when>
-							</choose>
-						</foreach>
-					</trim>
-				</if>
-			</foreach>
-		</where>
-	</sql>
-	<sql id="Base_Column_List">
-		user_id, user_name, password, email, telphone, true_name, create_date
-	</sql>
-	<select id="selectByExample" parameterType="com.hust.mining.model.UserExample"
-		resultMap="BaseResultMap">
-		select
-		<if test="distinct">
-			distinct
-		</if>
-		'true' as QUERYID,
-		<include refid="Base_Column_List" />
-		from user
-		<if test="_parameter != null">
-			<include refid="Example_Where_Clause" />
-		</if>
-		<if test="row!=0 or page!=0">
-			limit #{row},#{page}
-		</if>
-		<if test="orderByClause != null">
-			order by ${orderByClause}
-		</if>
-	</select>
-	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
-		resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from user
-		where user_id = #{userId,jdbcType=INTEGER}
-	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from user
-		where user_id = #{userId,jdbcType=INTEGER}
-	</delete>
-	<delete id="deleteByExample" parameterType="com.hust.mining.model.UserExample">
-		delete from user
-		<if test="_parameter != null">
-			<include refid="Example_Where_Clause" />
-		</if>
-	</delete>
-	<insert id="insert" parameterType="com.hust.mining.model.User">
-		insert into user (user_id, user_name, password,
-		email, telphone, true_name,
-		create_date)
-		values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR},
-		#{password,jdbcType=VARCHAR},
-		#{email,jdbcType=VARCHAR}, #{telphone,jdbcType=VARCHAR}, #{trueName,jdbcType=VARCHAR},
-		#{createDate,jdbcType=DATE})
-	</insert>
-	<insert id="insertSelective" parameterType="com.hust.mining.model.User">
-		insert into user
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="userId != null">
-				user_id,
-			</if>
-			<if test="userName != null">
-				user_name,
-			</if>
-			<if test="password != null">
-				password,
-			</if>
-			<if test="email != null">
-				email,
-			</if>
-			<if test="telphone != null">
-				telphone,
-			</if>
-			<if test="trueName != null">
-				true_name,
-			</if>
-			<if test="createDate != null">
-				create_date,
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="userId != null">
-				#{userId,jdbcType=INTEGER},
-			</if>
-			<if test="userName != null">
-				#{userName,jdbcType=VARCHAR},
-			</if>
-			<if test="password != null">
-				#{password,jdbcType=VARCHAR},
-			</if>
-			<if test="email != null">
-				#{email,jdbcType=VARCHAR},
-			</if>
-			<if test="telphone != null">
-				#{telphone,jdbcType=VARCHAR},
-			</if>
-			<if test="trueName != null">
-				#{trueName,jdbcType=VARCHAR},
-			</if>
-			<if test="createDate != null">
-				#{createDate,jdbcType=DATE},
-			</if>
-		</trim>
-	</insert>
-	<select id="countByExample" parameterType="com.hust.mining.model.UserExample"
-		resultType="java.lang.Long">
-		select count(*) from user
-		<if test="_parameter != null">
-			<include refid="Example_Where_Clause" />
-		</if>
-	</select>
-	<update id="updateByExampleSelective" parameterType="map">
-		update user
-		<set>
-			<if test="record.userId != null">
-				user_id = #{record.userId,jdbcType=INTEGER},
-			</if>
-			<if test="record.userName != null">
-				user_name = #{record.userName,jdbcType=VARCHAR},
-			</if>
-			<if test="record.password != null">
-				password = #{record.password,jdbcType=VARCHAR},
-			</if>
-			<if test="record.email != null">
-				email = #{record.email,jdbcType=VARCHAR},
-			</if>
-			<if test="record.telphone != null">
-				telphone = #{record.telphone,jdbcType=VARCHAR},
-			</if>
-			<if test="record.trueName != null">
-				true_name = #{record.trueName,jdbcType=VARCHAR},
-			</if>
-			<if test="record.createDate != null">
-				create_date = #{record.createDate,jdbcType=DATE},
-			</if>
-		</set>
-		<if test="_parameter != null">
-			<include refid="Update_By_Example_Where_Clause" />
-		</if>
-	</update>
-	<update id="updateByExample" parameterType="map">
-		update user
-		set user_id = #{record.userId,jdbcType=INTEGER},
-		user_name = #{record.userName,jdbcType=VARCHAR},
-		password = #{record.password,jdbcType=VARCHAR},
-		email = #{record.email,jdbcType=VARCHAR},
-		telphone = #{record.telphone,jdbcType=VARCHAR},
-		true_name = #{record.trueName,jdbcType=VARCHAR},
-		create_date = #{record.createDate,jdbcType=DATE}
-		<if test="_parameter != null">
-			<include refid="Update_By_Example_Where_Clause" />
-		</if>
-	</update>
-	<update id="updateByPrimaryKeySelective" parameterType="com.hust.mining.model.User">
-		update user
-		<set>
-			<if test="userName != null">
-				user_name = #{userName,jdbcType=VARCHAR},
-			</if>
-			<if test="password != null">
-				password = #{password,jdbcType=VARCHAR},
-			</if>
-			<if test="email != null">
-				email = #{email,jdbcType=VARCHAR},
-			</if>
-			<if test="telphone != null">
-				telphone = #{telphone,jdbcType=VARCHAR},
-			</if>
-			<if test="trueName != null">
-				true_name = #{trueName,jdbcType=VARCHAR},
-			</if>
-			<if test="createDate != null">
-				create_date = #{createDate,jdbcType=DATE},
-			</if>
-		</set>
-		where user_id = #{userId,jdbcType=INTEGER}
-	</update>
-	<update id="updateByPrimaryKey" parameterType="com.hust.mining.model.User">
-		update user
-		set user_name = #{userName,jdbcType=VARCHAR},
-		password = #{password,jdbcType=VARCHAR},
-		email = #{email,jdbcType=VARCHAR},
-		telphone = #{telphone,jdbcType=VARCHAR},
-		true_name = #{trueName,jdbcType=VARCHAR},
-		create_date = #{createDate,jdbcType=DATE}
-		where user_id = #{userId,jdbcType=INTEGER}
-	</update>
+  <resultMap id="BaseResultMap" type="com.hust.mining.model.User">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="telphone" jdbcType="VARCHAR" property="telphone" />
+    <result column="true_name" jdbcType="VARCHAR" property="trueName" />
+    <result column="create_date" jdbcType="DATE" property="createDate" />
+    <result column="algorithm" jdbcType="INTEGER" property="algorithm" />
+    <result column="granularity" jdbcType="INTEGER" property="granularity" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    user_id, user_name, password, email, telphone, true_name, create_date, algorithm, 
+    granularity
+  </sql>
+  <select id="selectByExample" parameterType="com.hust.mining.model.UserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hust.mining.model.UserExample">
+    delete from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hust.mining.model.User">
+    insert into user (user_id, user_name, password, 
+      email, telphone, true_name, 
+      create_date, algorithm, granularity
+      )
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{telphone,jdbcType=VARCHAR}, #{trueName,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=DATE}, #{algorithm,jdbcType=INTEGER}, #{granularity,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hust.mining.model.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="telphone != null">
+        telphone,
+      </if>
+      <if test="trueName != null">
+        true_name,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="algorithm != null">
+        algorithm,
+      </if>
+      <if test="granularity != null">
+        granularity,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null">
+        #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="trueName != null">
+        #{trueName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="algorithm != null">
+        #{algorithm,jdbcType=INTEGER},
+      </if>
+      <if test="granularity != null">
+        #{granularity,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hust.mining.model.UserExample" resultType="java.lang.Long">
+    select count(*) from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user
+    <set>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telphone != null">
+        telphone = #{record.telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trueName != null">
+        true_name = #{record.trueName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=DATE},
+      </if>
+      <if test="record.algorithm != null">
+        algorithm = #{record.algorithm,jdbcType=INTEGER},
+      </if>
+      <if test="record.granularity != null">
+        granularity = #{record.granularity,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user
+    set user_id = #{record.userId,jdbcType=INTEGER},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      telphone = #{record.telphone,jdbcType=VARCHAR},
+      true_name = #{record.trueName,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=DATE},
+      algorithm = #{record.algorithm,jdbcType=INTEGER},
+      granularity = #{record.granularity,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hust.mining.model.User">
+    update user
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null">
+        telphone = #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="trueName != null">
+        true_name = #{trueName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="algorithm != null">
+        algorithm = #{algorithm,jdbcType=INTEGER},
+      </if>
+      <if test="granularity != null">
+        granularity = #{granularity,jdbcType=INTEGER},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hust.mining.model.User">
+    update user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      telphone = #{telphone,jdbcType=VARCHAR},
+      true_name = #{trueName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=DATE},
+      algorithm = #{algorithm,jdbcType=INTEGER},
+      granularity = #{granularity,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
 </mapper>

@@ -94,4 +94,11 @@ public class PowerServiceImpl implements PowerService {
 		}
 		return true;
 	}
+
+	@Override
+	public long selectPowerCount(String powerName) {
+		PowerQueryCondition condition = new PowerQueryCondition();
+		condition.setName(powerName);
+		return powerDao.selectPowerCount(condition);
+	}
 }

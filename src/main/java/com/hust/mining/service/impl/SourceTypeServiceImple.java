@@ -66,4 +66,17 @@ public class SourceTypeServiceImple implements SourceTypeService {
 		}
 		return status;
 	}
+
+	@Override
+	public long selectSourceTypeCount() {
+		return sourceTypeDao.selectSourceTypeCount();
+	}
+
+	@Override
+	public long selectSourceTypeCountByName(String name) {
+		// TODO Auto-generated method stub
+		SourceTypeQueryCondition sourceType = new SourceTypeQueryCondition();
+		sourceType.setName(name);
+		return sourceTypeDao.selectSourceTypeCountByName(sourceType);
+	}
 }

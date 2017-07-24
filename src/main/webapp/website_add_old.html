@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>映射表管理——添加映射表</title>
+</head>
+<body>
+
+	<div class="s_nav">
+		当前位置： <a href="javascript:;" onclick="baseAjax('website_infor')">映射表管理</a>
+		>>添加映射表
+	</div>
+	<div class="user_infor">
+		<form>
+			<table width="450" border="0" class="change_tab">
+				<tr>
+					<td width="117" height="50">网站URL：</td>
+					<td width="323" height="50"><input type="text" class="form-control" id="urlWebsite" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="50">网站名称：</td>
+					<td width="323" height="50"><input type="text" class="form-control"
+						id="nameWibsite" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="50">网站级别：</td>
+					<td width="323" height="50"><input type="text" class="form-control"
+						id="levelWebsite" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="50">网站类型：</td>
+					<td width="323" height="50"><input type="text" class="form-control"
+						id="typeWebsite" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="70">
+						<button type="button"  class="btn btn-primary" onClick="addWebsite()">提交</button>
+					</td>
+					<td width="323" height="70">
+						<button type="button"  class="btn btn-primary" onClick="clearWebsite()">重置</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<b>添加映射文件：</b>
+	<div class="files_add" id="drop_area">
+		<p id="filename">将文件拖拽到此处
+		<p>
+	</div>
+	<div class="up_">
+		<button type="button"  class="btn btn-primary btn_up_del03" id="submitUpload">上传</button>
+	</div>
+
+</body>
+<script type="text/javascript" src="js/loading.js"></script>
+<script type="text/javascript" src="js/waiting.js"></script>
+<script type="text/javascript" src="js/addWebsite.js"></script>
+<script type="text/javascript" src="js/mapurl_add.js"></script>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>停用词管理——信息显示</title>
+<script type="text/javascript" src="js/stopword.js"></script>
+</head>
+<body>
+	<div class="s_nav">
+		当前位置： <a href="javascript:;">停用词管理</a> >>信息显示
+	</div>
+	<div class="user_infor">
+		<div class="role_search">
+			<div class="role_search_input">
+				<input type="search" placeholder="请输入停用词" class="form-control"
+					   id="stopword_search" /> <img src="images/icon_search.png"
+												 class="icon_search" />
+				<button type="button"  class="btn btn-primary" onClick="initSearchPage(1)"
+						style="margin-left: 10px">搜 索</button>
+				<button type="button"  class="btn btn-primary" onClick="stopwordInforAdd()">添加停用词</button>
+			</div>
+		</div>
+		<div class="infor_tablist">
+			<table width="692" border="0" class="infor_tab02">
+				<tr class="infor_tab02_tit">
+					<td colspan="1" height="45" align="center" bgcolor="#86c6ea">序号</td>
+					<td colspan="2" height="45" align="center" bgcolor="#86c6ea">停用词</td>
+					<td colspan="2" height="45" align="center" bgcolor="#86c6ea">添加时间</td>
+					<td colspan="2" height="45" align="center" bgcolor="#86c6ea">操作人员</td>
+					<td colspan="1" height="45" align="center" bgcolor="#86c6ea">操作</td>
+				</tr>
+
+			</table>
+		</div>
+		<div class="user_num">
+			<ul class="page" maxshowpageitem="5" pagelistcount="10" id="page"></ul>
+		</div>
+	</div>
+</body>
+
+
+</html>

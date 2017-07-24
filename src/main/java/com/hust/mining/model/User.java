@@ -17,6 +17,10 @@ public class User implements Serializable{
 	private String trueName;
 
 	private Date createDate;
+	
+	private Integer algorithm;
+
+    private Integer granularity;
 
 	public Integer getUserId() {
 		return userId;
@@ -73,4 +77,20 @@ public class User implements Serializable{
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+	
+	public Integer getAlgorithm() {
+        return algorithm;
+    }
+
+    public void setAlgorithm(Integer algorithm) {
+        this.algorithm = algorithm;
+    }
+
+    public Integer getGranularity() {
+        return granularity;
+    }
+
+    public void setGranularity(Integer granularity) {
+        this.granularity = granularity;
+    }
 }

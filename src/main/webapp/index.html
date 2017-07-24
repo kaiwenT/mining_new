@@ -19,7 +19,7 @@
 <script src="js/jquery/jquery-1.11.1.min.js"></script>
 <script src="js/bootstrap/bootstrap.min.js"></script>
 <script src="js/jquery/jquery.backstretch.min.js"></script>
-<script src="js/login.js"></script>
+<script type="text/javascript" src="js/login.js"></script>
 <script type="text/javascript" src="js/loading.js"></script>
 <script type="text/javascript" src="js/waiting.js"></script>
 
@@ -44,10 +44,11 @@
 
 
 </head>
-
-<body style="background: #4a8dc4;">
+<!-- style="background: #4a8dc4;"  -->
+<body>
 
 	<!-- Top content -->
+   <div class="top-wapper">	
 	<div class="top-content">
 
 		<div class="inner-bg">
@@ -81,9 +82,9 @@
 								<div class="form-group">
 									<label class="sr-only" for="form-password">Password</label>
 									<input type="password" name="form-password" placeholder="密码"
-										class="form-password form-control" id="form-password">
+										class="form-password form-control" onkeydown="keyDown(event)" id="form-password">
 								</div>
-								<button type="button" class="btn" style="font-size: 22px;"
+								<button  type="button" class="btn" style="font-size: 22px;"
 									onclick="login()">登&nbsp;录</button>
 							</form>
 						</div>
@@ -91,9 +92,9 @@
 				</div>
 			</div>
 		</div>
-
+	  </div>
 	</div>
-
+    <div class="copyright" style="z-index:1">合作单位：华中科技大学网络与技术中心大数据课题组&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址：湖北省武汉市华中科技大学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮政编码：430074&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电话：027-87556514</div>
 
 	<!-- Javascript -->
 
@@ -102,5 +103,4 @@
         <![endif]-->
 
 </body>
-
 </html>

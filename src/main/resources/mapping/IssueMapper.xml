@@ -5,6 +5,9 @@
 	<resultMap id="BaseResultMap" type="com.hust.mining.model.Issue">
 		<id column="issue_id" jdbcType="VARCHAR" property="issueId" />
 		<result column="issue_name" jdbcType="VARCHAR" property="issueName" />
+		<result column="issue_hold" jdbcType="VARCHAR" property="issueHold" />
+		<result column="issue_belong_to" jdbcType="VARCHAR" property="issueBelongTo" />
+		<result column="issue_type" jdbcType="VARCHAR" property="issueType" />
 		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
 		<result column="creator" jdbcType="VARCHAR" property="creator" />
 		<result column="last_operator" jdbcType="VARCHAR" property="lastOperator" />
@@ -75,7 +78,9 @@
 		</where>
 	</sql>
 	<sql id="Base_Column_List">
-		issue_id, issue_name, create_time, creator, last_operator, last_update_time
+		issue_id, issue_name, issue_hold, issue_belong_to, issue_type, create_time,
+		creator,
+		last_operator, last_update_time
 	</sql>
 	<select id="selectByExample" parameterType="com.hust.mining.model.IssueExample"
 		resultMap="BaseResultMap">
@@ -113,11 +118,13 @@
 		</if>
 	</delete>
 	<insert id="insert" parameterType="com.hust.mining.model.Issue">
-		insert into issue (issue_id, issue_name, create_time,
+		insert into issue (issue_id, issue_name, issue_hold,
+		issue_belong_to, issue_type, create_time,
 		creator, last_operator, last_update_time
 		)
 		values (#{issueId,jdbcType=VARCHAR}, #{issueName,jdbcType=VARCHAR},
-		#{createTime,jdbcType=TIMESTAMP},
+		#{issueHold,jdbcType=VARCHAR},
+		#{issueBelongTo,jdbcType=VARCHAR}, #{issueType,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
 		#{creator,jdbcType=VARCHAR}, #{lastOperator,jdbcType=VARCHAR},
 		#{lastUpdateTime,jdbcType=TIMESTAMP}
 		)
@@ -130,6 +137,15 @@
 			</if>
 			<if test="issueName != null">
 				issue_name,
+			</if>
+			<if test="issueHold != null">
+				issue_hold,
+			</if>
+			<if test="issueBelongTo != null">
+				issue_belong_to,
+			</if>
+			<if test="issueType != null">
+				issue_type,
 			</if>
 			<if test="createTime != null">
 				create_time,
@@ -150,6 +166,15 @@
 			</if>
 			<if test="issueName != null">
 				#{issueName,jdbcType=VARCHAR},
+			</if>
+			<if test="issueHold != null">
+				#{issueHold,jdbcType=VARCHAR},
+			</if>
+			<if test="issueBelongTo != null">
+				#{issueBelongTo,jdbcType=VARCHAR},
+			</if>
+			<if test="issueType != null">
+				#{issueType,jdbcType=VARCHAR},
 			</if>
 			<if test="createTime != null">
 				#{createTime,jdbcType=TIMESTAMP},
@@ -181,6 +206,15 @@
 			<if test="record.issueName != null">
 				issue_name = #{record.issueName,jdbcType=VARCHAR},
 			</if>
+			<if test="record.issueHold != null">
+				issue_hold = #{record.issueHold,jdbcType=VARCHAR},
+			</if>
+			<if test="record.issueBelongTo != null">
+				issue_belong_to = #{record.issueBelongTo,jdbcType=VARCHAR},
+			</if>
+			<if test="record.issueType != null">
+				issue_type = #{record.issueType,jdbcType=VARCHAR},
+			</if>
 			<if test="record.createTime != null">
 				create_time = #{record.createTime,jdbcType=TIMESTAMP},
 			</if>
@@ -202,6 +236,9 @@
 		update issue
 		set issue_id = #{record.issueId,jdbcType=VARCHAR},
 		issue_name = #{record.issueName,jdbcType=VARCHAR},
+		issue_hold = #{record.issueHold,jdbcType=VARCHAR},
+		issue_belong_to = #{record.issueBelongTo,jdbcType=VARCHAR},
+		issue_type = #{record.issueType,jdbcType=VARCHAR},
 		create_time = #{record.createTime,jdbcType=TIMESTAMP},
 		creator = #{record.creator,jdbcType=VARCHAR},
 		last_operator = #{record.lastOperator,jdbcType=VARCHAR},
@@ -215,6 +252,15 @@
 		<set>
 			<if test="issueName != null">
 				issue_name = #{issueName,jdbcType=VARCHAR},
+			</if>
+			<if test="issueHold != null">
+				issue_hold = #{issueHold,jdbcType=VARCHAR},
+			</if>
+			<if test="issueBelongTo != null">
+				issue_belong_to = #{issueBelongTo,jdbcType=VARCHAR},
+			</if>
+			<if test="issueType != null">
+				issue_type = #{issueType,jdbcType=VARCHAR},
 			</if>
 			<if test="createTime != null">
 				create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -234,6 +280,9 @@
 	<update id="updateByPrimaryKey" parameterType="com.hust.mining.model.Issue">
 		update issue
 		set issue_name = #{issueName,jdbcType=VARCHAR},
+		issue_hold = #{issueHold,jdbcType=VARCHAR},
+		issue_belong_to = #{issueBelongTo,jdbcType=VARCHAR},
+		issue_type = #{issueType,jdbcType=VARCHAR},
 		create_time = #{createTime,jdbcType=TIMESTAMP},
 		creator = #{creator,jdbcType=VARCHAR},
 		last_operator = #{lastOperator,jdbcType=VARCHAR},

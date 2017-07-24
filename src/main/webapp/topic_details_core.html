@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>查看任务</title>
+<script type="text/javascript" src="js/datashow.js"></script>
+<script type="text/javascript" src="js/dateformat.js"></script>
+<script type="text/javascript" src="js/scxsj.js"></script>
+
+</head>
+<body>
+	<div class="s_nav">
+		当前位置： <a href="javascript:;" onclick="baseAjax('topic_list')">任务管理</a>
+		<span>>>任务详情 </span><span style="color: red; font-weight: bold;">（核心数据）</span>
+		<span style="float: right; text-align: right">查看该任务对应的：<a
+			href="javascript:;"
+			style="font-weight: bold; text-decoration: underline"
+			onclick="queryLinkedIssue('extensive')">泛数据</a>&nbsp;&nbsp;&nbsp;<a
+			href="javascript:;"
+			style="font-weight: bold; text-decoration: underline"
+			onclick="queryLinkedIssue('standard')">准数据</a>&nbsp;&nbsp;
+		</span>
+	</div>
+	<div class="ckht">
+		<ul class="ckht_list">
+			<li class="issueName">任务名称：</li>
+			<li class="files_list">文件列表：
+				<div class="up_list_wrap">
+					<table border="0" class="up_list">
+						<tr class="d_blue">
+							<td width="50" align="center" valign="middle" bgcolor="#86c6ea"
+								class="d_blue">序号</td>
+							<td width="235" align="center" valign="middle" bgcolor="#86c6ea"
+								class="d_blue">核心数据结果名</td>
+							<td width="85" align="center" valign="middle" bgcolor="#86c6ea"
+								class="d_blue">创建人</td>
+							<td width="160" align="center" valign="middle" bgcolor="#86c6ea"
+								class="d_blue">创建时间</td>
+							<td width="230" align="center" valign="middle" bgcolor="#86c6ea"
+								class="d_blue">操作</td>
+						</tr>
+					</table>
+				</div>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

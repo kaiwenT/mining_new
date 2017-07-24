@@ -25,6 +25,15 @@ public class PowerDao {
 		List<Power> powers = powerMapper.selectByExample(example);
 		return powers;
 	}
+	
+	public long selectPowerCount(PowerQueryCondition power){
+		PowerExample example = new PowerExample();
+		Criteria criteria = example.createCriteria();
+		if (!StringUtils.isBlank(power.getName())) {
+			criteria.andPowerNameLike("%" + power.getName() + "%");
+		}
+		return powerMapper.countByExample(example);
+	}
 
 	public List<Power> selectPowerByPowerId(List<Integer> powerIds) {
 		PowerExample example = new PowerExample();

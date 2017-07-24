@@ -1,6 +1,6 @@
 // JavaScript Document
 //结果汇总
-$(function() {
+/*$(function() {
     $('.data_xq_tit li').mouseover(
             function(event) {
                 $(this).addClass('stop').siblings().removeClass('stop');
@@ -8,7 +8,7 @@ $(function() {
                 $('.data_xq_cont').eq($(this).index()).addClass('stop_zs')
                         .siblings().removeClass('stop_zs');
             });
-});
+});*/
 var title = "";
 function paint() {
     var currentSet = getCookie('currentSet');
@@ -19,13 +19,10 @@ function paint() {
     };
     $.ajax({
         type : "post",
-        url : "/result/statisticSingleSet",
+        url : "/standardResult/statisticSingleSet",
         data : JSON.stringify(json),
         dataType : "json",
         contentType : "application/json",
-        beforeSend : function() {
-            begin();
-        },
         success : function(msg) {
             parseTime(msg.result.time);
             parseAmount(msg.result.count);
@@ -33,13 +30,17 @@ function paint() {
         error : function() {
             alert("请求失败");
         },
-        complete : function() {
-            stop();
-        }
 
     });
 }
 paint();
+
+function mouseover(th){	
+    $(th).addClass('stop').siblings().removeClass('stop');
+    // 和事件源索引号相同的div显示 -- 事件源的索引号 == $(this).index()
+    $('.data_xq_cont').eq($(th).index()).addClass('stop_zs')
+            .siblings().removeClass('stop_zs');
+}
 function parseTime(json) {
     var netAttenHtml = '';
     var typeHtml = '';

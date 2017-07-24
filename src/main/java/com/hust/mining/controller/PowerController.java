@@ -31,6 +31,19 @@ public class PowerController {
 		}
 		return ResultUtil.success(powers);
 	}
+	
+	@ResponseBody
+	@RequestMapping("/selectPowerCount")
+	public Object selectPowerCount(@RequestParam(value = "powerName", required = false) String powerName,
+			HttpServletRequest request) {
+		long count = 0;
+		count = powerService.selectPowerCount(powerName);
+		
+		if(count <= 0){
+			return ResultUtil.errorWithMsg("未找到相关资源信息！");
+		}
+		return ResultUtil.success(count);
+	}
 
 	/**
 	 * 查询单条角色信息

@@ -25,6 +25,26 @@ public class SourceTypeDao {
 		List<SourceType> sourceType = sourceTypeMapper.selectByExample(example);
 		return sourceType;
 	}
+	
+	public long selectSourceTypeCount(){
+		SourceTypeExample example = new SourceTypeExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andIdIsNotNull();
+		example.setStart(0);
+		example.setLimit(0);
+		return sourceTypeMapper.countByExample(example);
+	}
+	
+	public long selectSourceTypeCountByName(SourceTypeQueryCondition sourceType){
+		SourceTypeExample example = new SourceTypeExample();
+		Criteria criteria = example.createCriteria();
+		if (!StringUtils.isBlank(sourceType.getName())) {
+			criteria.andNameLike("%" + sourceType.getName() + "%");
+		}
+		example.setStart(0);
+		example.setLimit(0);		
+		return sourceTypeMapper.countByExample(example);
+	}
 
 	public List<SourceType> selectSourceTypeByName(SourceTypeQueryCondition sourceType) {
 		SourceTypeExample example = new SourceTypeExample();

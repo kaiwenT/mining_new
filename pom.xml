@@ -19,9 +19,13 @@
 			<url>http://maven.nlpcn.org</url>
 		</repository>
 		<repository>
+			<id>central</id>
+			<url>http://repo1.maven.org/maven2</url>
+		</repository>
+		<repository>
 			<id>nexus</id>
 			<name>nexus</name>
-			<url>http://218.199.92.27:8081/nexus/content/groups/public/</url>
+			<url>http://211.69.197.168:8081/nexus/content/groups/public/</url>
 		</repository>
 	</repositories>
 	<dependencies>
@@ -182,33 +186,34 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-scratchpad</artifactId>
-			<version>3.14</version>
+			<version>3.8</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml-schemas</artifactId>
-			<version>3.14</version>
+			<version>3.8</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-			<version>3.14</version>
+			<version>3.8</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-			<version>3.14</version>
+			<version>3.8</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-excelant</artifactId>
-			<version>3.14</version>
+			<version>3.8</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
-			<version>3.14</version>
+			<version>3.8</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.apache.xmlbeans</groupId>
 			<artifactId>xmlbeans</artifactId>
@@ -326,6 +331,19 @@
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 			<version>2.4.2</version>
+		</dependency>
+	
+		<!-- jsopu -->
+		<dependency>
+   			 <groupId>org.jsoup</groupId>
+    			<artifactId>jsoup</artifactId>
+ 				<version>1.10.2</version>
+		</dependency>
+		<!-- 摘要 -->
+		<dependency>
+			<groupId>com.hust</groupId>
+			<artifactId>summary</artifactId>
+			<version>1.0</version>
 		</dependency>
 	</dependencies>
 	<build>

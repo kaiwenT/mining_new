@@ -3,100 +3,72 @@
 <head>
 <meta charset="UTF-8">
 <title>自有任务</title>
-<link rel="stylesheet" href="css/loading.css">
-<link rel="stylesheet" href="css/style.css">
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/loading.js"></script>
-<script type="text/javascript" src="js/waiting.js"></script>
 <script type="text/javascript" src="js/list.js"></script>
-<script type="text/javascript" src="js/dateformat.js"></script>
+<style type="text/css">
+</style>
 </head>
 <body>
-	<div class="main">
-		<iframe src="g_header.html" width="1000px " height="177px"></iframe>
-		<div class="content">
-			<iframe src="g_left.html" width="200px " height="740px"></iframe>
-			<div class="right float_r">
-				<div class="s_nav">
-					当前位置：
-					<a href="/topic_list.html">任务管理</a>
-					>>自有任务
-				</div>
-				<div class="htlist">
-					<table width="730" border="0" class="ht_tit">
-						<tr>
-							<td width="70" height="50">任务名称：</td>
-							<td width="110" height="30">
-								<input type="text" class="zyht_name" id="ht_name" />
-							</td>
-							<td width="130" height="30">创建起始时间：</td>
-							<td height="30">
-								<input type="date" class="begin_time" id="b_time" />
-							</td>
-							<td width="130" height="30">创建截止时间：</td>
-							<td height="30">
-								<input type="date" class="over_time" id="o_time" />
-							</td>
-						</tr>
-						<tr>
-							<td width="70" height="50">创建人：</td>
-							<td width="110" height="30">
-								<input type="text" class="cjr_name" id="cj_name" />
-							</td>
-							<td width="130" height="30">最后修改起始时间：</td>
-							<td height="30">
-								<input type="date" class="begin_time" id="lb_time" />
-							</td>
-							<td width="130" height="30">最后修改终止时间：</td>
-							<td height="30">
-								<input type="date" class="over_time" id="lo_time" />
-							</td>
-						</tr>
-						<tr>
-							<td width="70" height="50">&nbsp;</td>
-							<td width="110" height="30">&nbsp;</td>
-							<td width="130" height="30">&nbsp;</td>
-							<td width="134" height="30">&nbsp;</td>
-							<td width="130" height="30">&nbsp;</td>
-							<td height="30">
-								<a href="javascript:;" class="btn_search_ckht float_r">
-									<img src="images/search.png" onclick="searchData(1)" />
-								</a>
-							</td>
-						</tr>
-					</table>
-					<table width="730" border="0" class="ht_cont">
-						<tr class="nobd_t">
-							<td height="50" align="center">序号</td>
-							<td height="50" align="center">任务名称</td>
-							<td height="50" align="center">创建人</td>
-							<td height="50" align="center">创建时间</td>
-							<td height="50" align="center">最后修改人</td>
-							<td height="50" align="center">最后修改时间</td>
-							<td height="50" align="center">操作</td>
-						</tr>
-					</table>
-					<div class="user_num">
-						<input id="up_page" type="button" onclick="changPageOne(1)"
-							value="上一页" />
-						<input type="button" id="p_1" onclick="pageNumClick(this.id)"
-							value="1" class="cur" />
-						<input type="button" id="p_2" onclick="pageNumClick(this.id)"
-							value="2" />
-						<input type="button" id="p_3" onclick="pageNumClick(this.id)"
-							value="3" />
-						<input type="button" id="other" name="1"
-							onclick="setPageChangeView()" value="..." />
-						<input id="down_page" type="button" onclick="changPageOne(1)"
-							value="下一页" name="1" />
-						<input type="text" class="go_num" />
-						<input type="button" value="跳转" onclick="changePage()" />
-					</div>
-				</div>
-			</div>
-			<div class="clear"></div>
+	<!-- 主要内容 -->
+	<div class="s_nav">
+		当前位置： <a href="javascript:;">任务管理</a> >>自有任务
+	</div>
+	<!--  
+	<div style="font-size: 16px; margin: 10px auto;">
+		数据类型： <label style="color: red"><input name="issueType"
+			type="radio" checked="checked" value="extensive" />泛数据</label> <label><input
+			name="issueType" type="radio" value="standard"
+			style='margin-left: 5px' />准数据</label> <label><input name="issueType"
+			type="radio" value="core" style='margin-left: 5px' />核心数据</label>
+	</div>  -->
+	<div class="htlist">
+		<table width="730" border="0" class="ht_tit">
+			<tr>
+				<td width="70" >任务名称：</td>
+				<td width="115"><input type="text" style="width: 110px;"
+					class="form-control zyht_name"  id="ht_name" /></td>
+				<td width="130" >创建起始时间：</td>
+				<td ><input type="date" style="width: 135px;" class="form-control begin_time"
+					id="b_time" /></td>
+				<td width="130">创建截止时间：</td>
+				<td><input type="date" style="width: 135px;" class="form-control over_time"
+					id="o_time" /></td>
+			</tr>
+			<tr>
+				<td width="70">创建人：</td>
+				<td width="115" ><input style="width: 110px;" type="text" class="form-control cjr_name"
+					id="cj_name" /></td>
+				<td width="130" >最后修改起始时间：</td>
+				<td ><input type="date" style="width: 135px;" class="form-control begin_time"
+					id="lb_time" /></td>
+				<td width="130">最后修改终止时间：</td>
+				<td ><input type="date" style="width: 135px;" class="form-control over_time"
+					id="lo_time" /></td>
+			</tr>
+			<tr>
+				<td width="70" >&nbsp;</td>
+				<td width="115">&nbsp;</td>
+				<td width="130">&nbsp;</td>
+				<td width="130" >&nbsp;</td>
+				<td width="130">&nbsp;</td>
+				<td >
+					<button type="button"  class="btn btn-primary" style="width:80px; float:right;margin-top:5px;" onclick="initSearchPage(1)">搜 索</button>
+				</td>
+			</tr>
+		</table>
+		<table width="730" border="0" class="ht_cont">
+			<tr class="nobd_t">
+				<td height="50" align="center">序号</td>
+				<td height="50" align="center">任务名称</td>
+				<td height="50" align="center">创建人</td>
+				<td height="50" align="center">创建时间</td>
+				<td height="50" align="center">最后修改人</td>
+				<td height="50" align="center">最后修改时间</td>
+				<td height="50" align="center">操作</td>
+			</tr>
+		</table>
+		<div class="user_num">
+			<ul class="page" maxshowpageitem="5" pagelistcount="10" id="page"></ul>
 		</div>
-		<iframe src="g_footer.html" width="1000px" height="80px"></iframe>
 	</div>
 </body>
 </html>

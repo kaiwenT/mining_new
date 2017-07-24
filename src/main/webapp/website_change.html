@@ -3,90 +3,67 @@
 <head>
 <meta charset="UTF-8">
 <title>映射表管理——编辑映射表</title>
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/loading.css">
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/loading.js"></script>
-<script type="text/javascript" src="js/waiting.js"></script>
-<script type="text/javascript" src="js/website.js"></script>
+<script type="text/javascript" src="js/addWebsite.js"></script>
 </head>
 <body>
-	<div class="main">
-		<iframe src="g_header.html" width="1000px" height="177px"></iframe>
-		<div class="content">
-			<iframe src="g_left.html" width="200px" height="740px"></iframe>
-			<div class="right float_r">
-				<div class="s_nav">
-					当前位置：
-					<a href="#">映射表管理</a>
-					>>编辑映射表
-				</div>
-				<div class="user_infor">
-					<form>
-						<table width="450" border="0" class="change_tab">
-							<tr>
-								<td width="117" height="50">网站URL：</td>
-								<td width="323" height="50">
-									<input type="text" id="new_url_website" />
-								</td>
-							</tr>
-							<tr>
-								<td width="117" height="50">网站名称：</td>
-								<td width="323" height="50">
-									<input type="text" id="new_name_website" />
-								</td>
-							</tr>
-							<tr>
-								<td width="117" height="50">网站级别：</td>
-								<td width="323" height="50">
-									<input type="text" id="new_level_website" />
-								</td>
-							</tr>
-							<tr>
-								<td width="117" height="50">网站类型：</td>
-								<td width="323" height="50">
-									<input type="text" id="new_type_website" />
-								</td>
-							</tr>
-							<tr>
-								<td width="117" height="70">
-									<img src="images/change_submit.png" class="float_r"
-										onclick="websiteInforChange()" />
-								</td>
-								<td width="323" height="70">
-									<img src="images/change_again.png" class="user_tijiao float_l"
-										onclick="clearNewWebsite()" />
-								</td>
-							</tr>
-						</table>
-					</form>
-				</div>
-			</div>
-			<div class="clear"></div>
-		</div>
-		<iframe src="g_footer.html" width="1000px" height="80px"></iframe>
+	<div class="s_nav">
+		当前位置： <a href="javascript:;" onclick="baseAjax('website_infor')">映射表管理</a> >>编辑映射表
+	</div>
+	<div class="user_infor">
+		<form>
+			<table width="450" border="0" class="change_tab">
+				<tr>
+					<td width="117" height="50">网站URL：</td>
+					<td width="323" height="50"><input type="text" class="form-control"
+						id="new_url_website" disabled="disabled" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="50">网站名称：</td>
+					<td width="323" height="50"><input type="text" class="form-control"
+						id="new_name_website" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="50">网站级别：</td>
+					<td width="323" height="50"><input type="text" class="form-control"
+						id="new_level_website" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="50">网站类型：</td>
+					<td width="323" height="50"><input type="text" class="form-control"
+						id="new_type_website" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="70">
+						<button type="button"  class="btn btn-primary" onclick="websiteInforChange()" >提交</button>
+					</td>
+					<td width="323" height="70">
+						<button type="button"  class="btn btn-primary" onclick="clearNewWebsite()">重置</button>
+					</td>
+				</tr>
+			</table>
+		</form>
 	</div>
 </body>
 <script>
-    var newName = getCookie("websiteName");
-    var newUrl = getCookie("url");
-    var newLevel = getCookie("level");
-    var newType = getCookie("type");
-    console.log(newName);
-    console.log(newUrl);
-    console.log(newLevel);
-    console.log(newType);
-    var a_cookie = document.getElementById("new_name_website");
-    var b_cookie = document.getElementById("new_url_website");
-    var c_cookie = document.getElementById("new_level_website");
-    var d_cookie = document.getElementById("new_type_website");
-    a_cookie.value = newName;
-    b_cookie.value = newUrl;
-    c_cookie.value = newLevel;
-    d_cookie.value = newType;
-    a_cookie.style.color = "#999999";
-    b_cookie.style.color = "#999999";
-    c_cookie.style.color = "#999999";
-    d_cookie.style.color = "#999999";
+	var newName = getCookie("websiteName");
+	var newUrl = getCookie("url");
+	var newLevel = getCookie("level");
+	var newType = getCookie("type");
+	console.log(newName);
+	console.log(newUrl);
+	console.log(newLevel);
+	console.log(newType);
+	var a_cookie = document.getElementById("new_name_website");
+	var b_cookie = document.getElementById("new_url_website");
+	var c_cookie = document.getElementById("new_level_website");
+	var d_cookie = document.getElementById("new_type_website");
+	a_cookie.value = newName;
+	b_cookie.value = newUrl;
+	c_cookie.value = newLevel;
+	d_cookie.value = newType;
+/* 	a_cookie.style.color = "#999999";
+	b_cookie.style.color = "#999999";
+	c_cookie.style.color = "#999999";
+	d_cookie.style.color = "#999999"; */
 </script>
 </html>

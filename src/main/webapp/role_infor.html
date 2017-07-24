@@ -1,55 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>角色管理——信息显示</title>
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/loading.css">
-    <script type="text/javascript" src="js/jquery.js"></script>
-     <script type="text/javascript" src="js/loading.js"></script>
-	<script type="text/javascript" src="js/waiting.js"></script>
-    <script type="text/javascript" src="js/role.js"></script>
+<meta charset="UTF-8">
+<title>角色管理——信息显示</title>
+<script type="text/javascript" src="js/role.js"></script>
 </head>
 <body>
-	<div class="main">
-		<iframe src="g_header.html" width="1000px" height="177px"></iframe>
-		<div class="content">
-			<iframe src="g_left.html" width="200px" height="740px"></iframe>
-			<div class="right float_r">
-				<div class="s_nav">当前位置：<a href="#">角色管理</a>>>信息显示</div>
-				<div class="user_infor">
-                    <div class="role_search">
-                    	<div class="role_search_input">
-                        	<input id="searchRole" type="search" placeholder="请输入角色名" />
-                            <img src="images/icon_search.png" class="icon_search" />
-                        </div>
-                        <img src="images/btn_role_search.png" onClick="roleInforSearch(1)" class="btn_role" />
-                        <img src="images/btn_role_add.png" onClick="roleInforAdd()" class="btn_role" />
-                    </div>
-                    <div class="infor_tablist">
-                      <table width="692" border="0" class="infor_tab02">
-                          <tr class="infor_tab02_tit">
-                            <td width="169" height="40" align="center" bgcolor="#86c6ea">角色编号</td>
-                            <td width="231" height="40" align="center" bgcolor="#86c6ea">角色名称</td>
-                            <td colspan="2" height="40" align="center" bgcolor="#86c6ea">操作</td>
-                          </tr>
-                        </table>
-                  </div>
-                  <div class="user_num">
-                  	<input id="up_page" type="button" onclick="changPageOne(-1)" value="上一页" />
-                  	<input type="button"id="p_1" onclick="pageNumClick(this.id)" value="1"  class="cur" />
-                  	<input type="button" id="p_2" onclick="pageNumClick(this.id)" value="2" />
-                  	<input type="button" id="p_3" onclick="pageNumClick(this.id)" value="3" />
-                  	<input type="button" id="other" name="1" onclick="setPageChangeView()" value="..." />
-                  	<input id="down_page" type="button"  onclick="changPageOne(1)" value="下一页" name="1"/>
-                  	<input type="text" class="go_num"/>
-                  	<input type="button" value="跳转" onclick="changePage()"/>
-                  </div>
-			  </div>
+	<div class="s_nav">
+		当前位置： <a href="javascript:;">角色管理</a> >>信息显示
+	</div>
+	<div class="user_infor">
+		<div class="role_search">
+			<div class="role_search_input">
+				<input id="searchRole" type="search" placeholder="请输入角色名" class="form-control"
+					   /> <img src="images/icon_search.png"
+												 class="icon_search" />
+				<button type="button"  class="btn btn-primary" onClick="initSearchPage(1)"
+						style="margin-left: 10px">搜 索</button>
+				<button type="button"  class="btn btn-primary" onClick="roleInforAdd()" >添加角色</button>
 			</div>
-            <div class="clear"></div>
 		</div>
-        <iframe src="g_footer.html" width="1000px" height="80px"></iframe>
+		<div class="infor_tablist">
+			<table width="692" border="0" class="infor_tab02" id="role_infor_tab">
+				<tr class="infor_tab02_tit">
+					<td width="169" height="45" align="center" bgcolor="#86c6ea">角色编号</td>
+					<td width="231" height="45" align="center" bgcolor="#86c6ea">角色名称</td>
+					<td colspan="2" height="45" align="center" bgcolor="#86c6ea">操作</td>
+				</tr>
+			</table>
+		</div>
+		<div class="user_num">
+			<ul class="page" maxshowpageitem="5" pagelistcount="10" id="page"></ul>
+		</div>
 	</div>
 </body>
+
 </html>

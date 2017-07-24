@@ -3,68 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <title>映射表管理——添加映射表</title>
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/loading.css">
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/loading.js"></script>
-<script type="text/javascript" src="js/waiting.js"></script>
-<script type="text/javascript" src="js/website.js"></script>
 </head>
 <body>
-	<div class="main">
-		<iframe src="g_header.html" width="1000px" height="177px"></iframe>
-		<div class="content">
-			<iframe src="g_left.html" width="200px" height="740px"></iframe>
-			<div class="right float_r">
-				<div class="s_nav">
-					当前位置：
-					<a href="#">映射表管理</a>
-					>>添加映射表
-				</div>
-				<div class="user_infor">
-					<form>
-						<table width="450" border="0" class="change_tab">
-							<tr>
-								<td width="117" height="50">网站URL：</td>
-								<td width="323" height="50">
-									<input type="text" id="urlWebsite" />
-								</td>
-							</tr>
-							<tr>
-								<td width="117" height="50">网站名称：</td>
-								<td width="323" height="50">
-									<input type="text" id="nameWibsite" />
-								</td>
-							</tr>
-							<tr>
-								<td width="117" height="50">网站级别：</td>
-								<td width="323" height="50">
-									<input type="text" id="levelWebsite" />
-								</td>
-							</tr>
-							<tr>
-								<td width="117" height="50">网站类型：</td>
-								<td width="323" height="50">
-									<input type="text" id="typeWebsite" />
-								</td>
-							</tr>
-							<tr>
-								<td width="117" height="70">
-									<img src="images/change_submit.png" class="float_r"
-										onClick="addWebsite()" />
-								</td>
-								<td width="323" height="70">
-									<img src="images/change_again.png" class="user_tijiao float_l"
-										onClick="clearWebsite()" />
-								</td>
-							</tr>
-						</table>
-					</form>
-				</div>
-			</div>
-			<div class="clear"></div>
-		</div>
-		<iframe src="g_footer.html" width="1000px" height="80px"></iframe>
+
+	<div class="s_nav">
+		当前位置： <a href="javascript:;" onclick="baseAjax('website_infor')">映射表管理</a>
+		>>添加映射表
 	</div>
+	<div class="user_infor">
+		<form>
+			<table width="450" border="0" class="change_tab">
+				<tr>
+					<td width="117" height="50">域名：</td>
+					<td width="323" height="50"><input type="text" class="form-control" id="url" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="50">名称：</td>
+					<td width="323" height="50"><input type="text" class="form-control"
+						id="name" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="50">栏目：</td>
+					<td width="323" height="50"><input type="text" class="form-control"
+													   id="column" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="50">类型：</td>
+					<td width="323" height="50"><input type="text" class="form-control"
+						id="type" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="50">级别：</td>
+					<td width="323" height="50"><input type="text" class="form-control"
+						id="rank" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="50">影响范围：</td>
+					<td width="323" height="50"><input type="text" class="form-control"
+													   id="incidence" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="50">权重：</td>
+					<td width="323" height="50"><input type="text" class="form-control"
+													   id="weight" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="70">
+						<button type="button"  class="btn btn-primary" onClick="addWebsite()">提交</button>
+					</td>
+					<td width="323" height="70">
+						<button type="button"  class="btn btn-primary" onClick="clearWebsite()">重置</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<b>添加映射文件：</b>
+	<div class="files_add" id="drop_area">
+		<p id="filename">将文件拖拽到此处
+		<p>
+	</div>
+	<div class="up_">
+		<button type="button"  class="btn btn-primary btn_up_del03" id="submitUpload">上传</button>
+	</div>
+
 </body>
+<script type="text/javascript" src="js/loading.js"></script>
+<script type="text/javascript" src="js/waiting.js"></script>
+<script type="text/javascript" src="js/addWebsite.js"></script>
+<script type="text/javascript" src="js/mapurl_add.js"></script>
+
+<script type="text/javascript">
+	$("#weight").keyup(function () {
+        $(this).val($(this).val().replace(/[^0-9]/g,''));
+    }).bind("paste",function() {  //CTR+V事件处理
+        $(this).val($(this).val().replace(/[^0-9]/g, ''));
+    })
+</script>
 </html>

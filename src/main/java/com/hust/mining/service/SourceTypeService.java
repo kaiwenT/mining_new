@@ -10,6 +10,10 @@ public interface SourceTypeService {
 	List<SourceType> selectSourceType(int start, int limit);
 
 	List<SourceType> selectSourceTypeByName(SourceTypeQueryCondition sourceType);
+	
+	long selectSourceTypeCount();
+	
+	long selectSourceTypeCountByName(String name);
 
 	int deleteSourceTypeById(int id);
 

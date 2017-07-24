@@ -1,62 +1,143 @@
 // JavaScript Document
 //2.1任务列表显示
+
+issueType="extensive";
+// 选中全局任务时的数据类型
+$(document).ready(function(){
+	var r = getCookie("issueType");
+    if(r != null){
+    	issueType = r;
+    }
+    setCookie_issueType(issueType);
+    var choosenLabel = $("input[name='issueType'][value="+issueType+"]");
+    choosenLabel.parent().css("color","red");
+    choosenLabel.parent().siblings('label').css("color","black");
+    choosenLabel.attr("checked",true);
+	initShowPage(1);
+});
+
+// radio选中事件
+$(function(){
+	$(":radio").click(function(){
+		// 清空数据显示
+		$('.ht_cont tr:not(:first)').html("");
+		issueType=$(this).val();
+		setCookie_issueType(issueType);
+		var choosenLabel = $("input[name='issueType'][value="+issueType+"]");
+    	choosenLabel.parent().css("color","red");
+    	choosenLabel.parent().siblings('label').css("color","black");
+    	choosenLabel.attr("checked",true);
+		// 显示数据
+    	initShowPage(1);
+	});
+});
+
+function setCookie_issueType(value){
+	var Days = 1; // 此 cookie 将被保存 1 天
+	var exp　= new Date();
+	exp.setTime(exp.getTime() +Days*24*60*60*1000);
+	document.cookie = "issueType="+ escape (value) + ";expires=" + exp.toGMTString();
+}
+
 function allData (page){
 	search_click=false;
     $.ajax({
         type:"post",
-        // url:"http://1v5002132k.iask.in:13020/xinheng/issue/queryOwnIssue",
         url:"/issue/queryAllIssue",
 		data:JSON.stringify(GetJsonData(page)),
 		dataType:"json",
 		contentType:"application/json",
-		beforeSend : function(){
-		    begin();
-		},
         success:function(msg){
-            // console.log(msg);
             if(msg.status=="OK"){
                 // alert("success") ;
 				var items = msg.result.list ;
-				var cookie_value1;
+				
 				$('.ht_cont tr:not(:first)').html("");
+				var count=0;
 				$.each(items,function(idx,item) {
-					// alert(msg.tagName);
-					cookie_value1="'"+item.issueId+"'";
-					row= '<tr><td height="40" align="center">'+(idx+1)+
-					'</td><td height="40" align="center"><a href="javascript:;" onclick="setCookie('+cookie_value1+')">'+item.issueName+
-					'</a></td><td height="40" align="center">'+item.creator+
-					'</td><td height="40" align="center">'+ new Date(item.createTime.time).format('yyyy-MM-dd hh:mm:ss')+
-					'</td><td height="40" align="center">'+item.lastOperator+
-					'</td><td height="40" align="center">'+ new Date(item.lastUpdateTime.time).format('yyyy-MM-dd hh:mm:ss')+
-					'</td><td height="40" align="center"><img src="images/delete.png" class="'+item.issueId+'" /></td></tr>'
-					$('.ht_cont').append(row);
-					
+						var item_issueId="'"+item.issueId+"'";
+						count++;
+						row= '<tr><td height="40" align="center">'+((page-1)*10+count)+
+						'</td><td height="40" align="center"><a href="javascript:;" onclick="setCookie('+item_issueId+')">'+item.issueName+
+						'</a></td><td height="40" align="center">'+item.creator+
+						'</td><td height="40" align="center">'+ new Date(item.createTime.time).format('yyyy-MM-dd hh:mm:ss')+
+						'</td><td height="40" align="center">'+item.lastOperator+
+						'</td><td height="40" align="center">'+ new Date(item.lastUpdateTime.time).format('yyyy-MM-dd hh:mm:ss')+
+						'</td><td height="40" align="center"><button type="button" class="btn btn-danger" onclick="deleteData('+"'"+item.issueId+"'"+')">删除</button></td></tr>'
+						$('.ht_cont').append(row);
 				});
 				
             }else{
-                alert("fail");
             }
 
         },
-        complete:function(){
-		    stop();
-		} ,
         error:function(){
-            // ���������
         }
     });
 }
-allData (1)
-function GetJsonData(page) {
-    var myDate=new Date();
-    end=myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + (myDate.getDate()+1);
-    start=myDate.getFullYear() + "-" + myDate.getMonth() + "-" + myDate.getDate();
-    console.log(end)
-    console.log(start)
+function initShowPage(currenPage){
+    var listCount = 0;
+    if("undefined" == typeof(currenPage) || null == currenPage){
+        currenPage = 1;
+    }
+    $.ajax({
+        type: "post",
+        url: "/issue/queryAllIssueCount",
+        data:JSON.stringify(GetJsonData(currenPage)),
+		dataType:"json",
+		contentType:"application/json",
+        success: function (msg) {
+            if (msg.status == "OK") {
+                // alert("success");
+                listCount = msg.result;
+                $("#page").initPage(listCount,currenPage,allData);
+            } else {
+                alert(msg.result);
+            }
+        },
+        error: function () {
+            alert("非常抱歉，您没有权限访问该资源，请联系管理员");
+        }})
+}
 
+function initSearchPage(currenPage){
+    var listCount = 0;
+    if("undefined" == typeof(currenPage) || null == currenPage){
+        currenPage = 1;
+    }
+    $.ajax({
+        type: "post",
+        url: "/issue/queryAllIssueCount",
+        data:JSON.stringify(SearchJsonData(currenPage)),
+        dataType: "json",
+		contentType:"application/json",
+        success: function (msg) {
+            if (msg.status == "OK") {
+                // alert("success");
+                listCount = msg.result;
+                $("#page").initPage(listCount,currenPage,searchData);
+            } else {
+            	$('.ht_cont tr:not(:first)').html("");
+                alert(msg.result);
+            }
+        },
+        error: function () {
+            alert("非常抱歉，您没有权限访问该资源，请联系管理员");
+        }})
+}
+
+
+function GetJsonData(page) {
+	var myDate=new Date();
+	var timeStamp = Date.parse(myDate)/1000;
+	myDate.setTime((timeStamp+24*60*60)*1000);
+	end=myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + (myDate.getDate());
+	myDate.setTime((timeStamp-90*24*60*60)+1000);
+	start=myDate.getFullYear() + "-" + (myDate.getMonth()+1) + "-" + myDate.getDate();
     var json = {
         "issueId":"",
         "issueName":"" ,
+        "issueType":issueType,
         "createStartTime":start,
         "createEndTime":end,
         "user":"",
@@ -67,6 +148,7 @@ function GetJsonData(page) {
     };
     return json;
 }
+
 
 
 /**
@@ -212,20 +294,17 @@ function updateNowPage(page){
 }
 
 
-
 function setCookie(value1){
-	// alert(name+value);
-	var cookie_name1="id";
+	var cookie_issueId="issueId";
 	var Days = 1; // 此 cookie 将被保存 1 天
 	var exp　= new Date();
 	exp.setTime(exp.getTime() +Days*24*60*60*1000);
-	document.cookie = cookie_name1 +"="+ escape (value1) + ";expires=" + exp.toGMTString();
-	window.location.href = "topic_details.html";
+	document.cookie = cookie_issueId +"="+ escape (value1) + ";expires=" + exp.toGMTString();
+	baseAjax("original_data");
 }
 
 function getCookie(name) {
 	
-	console.log(document.cookie);
 	var arr =document.cookie.match(new RegExp("(^|)"+name+"=([^;]*)(;|$)"));
 	if(arr !=null) 
 		return unescape(arr[2]); 
@@ -238,35 +317,26 @@ function searchData(page){
 	setFirstSelected();
     $.ajax({
         type:"post",
-        // url:"http://1v5002132k.iask.in:13020/xinheng/issue/queryOwnIssue",
-        url:"/issue/queryOwnIssue",
+        url:"/issue/queryAllIssue",
         data:JSON.stringify(SearchJsonData(page)),
         dataType:"json",
         contentType:"application/json",
-        beforeSend : function(){
-		    begin();
-		},
         success:function(msg){
-           // console.log(msg);
             if(msg.status=="OK"){
-                // alert("success") ;
                 $('.ht_cont tr:not(:first)').html("");
 				var items = msg.result.list ;
 				$.each(items,function(idx,item) {
-					// alert(obj.tagName);
-					row= '<tr><td height="40" align="center">'+(idx+1)+'</td><td height="40" align="center"><a href="#">'+item.issueName+'</a></td><td height="40" align="center">'+item.creator+'</td><td height="40" align="center">'+item.createTime.year+'-'+item.createTime.month+'-'+item.createTime.date+'&nbsp;'+item.createTime.hours+':'+item.createTime.seconds+'</td><td height="40" align="center">'+item.lastOperator+'</td><td height="40" align="center">'+item.lastUpdateTime.year+'-'+item.lastUpdateTime.month+'-'+item.lastUpdateTime.date+'&nbsp;'+item.lastUpdateTime.hours+':'+item.lastUpdateTime.seconds+'</td><td height="40" align="center"><img src="images/delete.png" class="'+item.issueId+'" /></td>'
+					row= '<tr><td height="40" align="center">'+((page-1)*10+idx+1)+'</td><td height="40" align="center"><a href="#">'+item.issueName+'</a></td><td height="40" align="center">'+item.creator+'</td><td height="40" align="center">'+new Date(item.lastUpdateTime.time).format('yyyy-MM-dd hh:mm:ss')+'</td><td height="40" align="center">'+item.lastOperator+'</td><td height="40" align="center">'+new Date(item.lastUpdateTime.time).format('yyyy-MM-dd hh:mm:ss')+'</td><td height="40" align="center"><button type="button" class="btn btn-danger" onclick="deleteData('+"'"+item.issueId+"'"+')">删除</button></td>'
 					$('.ht_cont').append(row);
 					
 				});
 				
             }else{
-                alert("fail");
+            	 $('.ht_cont tr:not(:first)').html("");
+            	 alert(issueType+" data have been erased!");
             }
 
         } ,
-        complete:function(){
-		    stop();
-		},
         error:function(){
             
         }
@@ -277,14 +347,25 @@ function SearchJsonData(page) {
 	// var obj = $('#ht_name').val();
 	var obj1 = $('#b_time').val();
 	var obj2 = $('#o_time').val();
+	if(!(obj2==""|| obj2=="null" || obj2=="undefined")){
+		var timestamp = Date.parse(new Date(obj2))/1000;
+		var endDate = new Date();
+		endDate.setTime((timestamp+24*60*60)*1000);
+		obj2 = endDate.getFullYear() + "-" + (endDate.getMonth()+1) + "-" + endDate.getDate();
+	}
 	var obj3 = $('#cj_name').val();
 	var obj4 = $('#lb_time').val();
 	var obj5 = $('#lo_time').val();
-	// console.log(obj);
-	// console.log(obj1);
-    var json = {
+	if(!(obj5==""|| obj5=="null" || obj5=="undefined")){
+		var timestamp2 = Date.parse(new Date(obj5))/1000;
+		var endDate2 = new Date();
+		endDate2.setTime((timestamp2+24*60*60)*1000);
+		obj5 = endDate2.getFullYear() + "-" + (endDate2.getMonth()+1) + "-" + endDate2.getDate();	
+	}
+	var json = {
 		"issueId":"",
 		"issueName": $('#ht_name').val(),
+		"issueType": issueType,
 		"createStartTime":obj1,
 		"createEndTime":obj2,
 		"user":obj3,
@@ -297,41 +378,29 @@ function SearchJsonData(page) {
 }
 
 // 2.3管理任务
+/*
+ * $(function(){ $(".ht_cont").on("click","img",function(){ var issueId =
+ * $(this).attr("class"); deleteData(issueId); }) })
+ */
 
-$(function(){
-	$(".ht_cont").on("click","img",function(){
-		var issueId = $(this).attr("class");
-		console.log(issueId);
-		deleteData(issueId);
-		
-		function deleteData(issueId){
-	
-			$.ajax({
-				type:"post",
-				// url:"http://1v5002132k.iask.in:13020/xinheng/issue/delete",
-				url:"/issue/delete",
-				data:{
-					issueId:issueId,
-				} ,
-				dataType:"json",
-				success:function(msg){
-					// alert("lll");
-					console.log(msg);
-					if(msg.status=="OK"){
-						alert("success");
-						$('.ht_cont').html("");
-						searchData(1)
-					}else{
-						alert("fail");
-					}
-		
-				} ,
-				error:function(){
-					
-				}
-			});
+function deleteData(issueId){
+	$.ajax({
+		type:"post",
+		url:"/issue/deleteAll",
+		data:{
+			issueId:issueId,
+			issueType:issueType,
+		} ,
+		dataType:"json",
+		success:function(msg){
+			if(msg.status=="OK"){
+				initShowPage(1)
+			}else{
+				alert("fail");
+			}
+		} ,
+		error:function(){		
 		}
-	})
-})
-
+	});
+}
 

@@ -26,7 +26,15 @@ public interface ResultService {
 
     public List<Result> queryResultsByIssueId(String issueId);
 
-    public Map<String, List<String[]>> exportService(String issueId, String resultId,HttpServletRequest request);
+    public List<String[]> exportService(String issueId, String resultId,HttpServletRequest request);
     
     public String exportAbstract(List<String[]> count);
+
+	public List<String[]> getClusterResultById( String clusterIndex,String resultId, String issueId, HttpServletRequest request);
+
+	public boolean deleteClusterItems(String clusterIndex, int[] sets, HttpServletRequest request);
+
+	public boolean resetCluster(String index, HttpServletRequest request);
+
+	public List<Integer> getMarked(List<String[]> cluster);
 }

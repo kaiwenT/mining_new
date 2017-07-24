@@ -99,6 +99,47 @@ public class UserController {
         }
         return ResultUtil.success("delete user success");
     }
+    
+    /**
+     * 设置算法和粒度选择
+     * @param algorithm
+     * @param granularity
+     * @param request
+     * @return
+     */
+    
+    @ResponseBody
+    @RequestMapping("/setAlgorithmAndGranularity")
+    public Object setAlgorithmAndgranularity(@RequestParam(value = "algorithm", required = true) int algorithm,
+    		@RequestParam(value = "granularity", required = true) int granularity,HttpServletRequest request) {
+       
+    	String username = userService.getCurrentUser(request);
+    	List<User> users =userService.selectSingleUserInfo(username, request);
+    	User user = users.get(0);
+    	user.setAlgorithm(algorithm);
+    	user.setGranularity(granularity);
+    	boolean statue = userService.updateUser(user);
+    	if (statue == false) {
+    		return ResultUtil.errorWithMsg("update user error");
+		}
+    	return ResultUtil.success("update user success");
+    }
+    
+    /**
+     * 获取当前用户的算法选择和粒度选择，显示到页面
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getAlgorithmAndGranularity")
+    public Object getAlgorithmAndgranularity(HttpServletRequest request) {
+       
+    	String username = userService.getCurrentUser(request);
+    	List<User> users =userService.selectSingleUserInfo(username, request);
+    	User user = users.get(0);
+    	return ResultUtil.success(user);
+    }
+
 
     /**
      * 
@@ -206,9 +247,40 @@ public class UserController {
             return ResultUtil.errorWithMsg("select userInfo empty");
         }
         Map<Object, Object> map = new HashMap<>();
-        map.put("userQueryCondition", userInfo);
+        map.put("user", userInfo);
         map.put("role", roles);
         map.put("userRole", userRole);
         return ResultUtil.success(map);
     }
+    
+    @ResponseBody
+    @RequestMapping(value = "/selectUserInfoCount", method = RequestMethod.POST)
+    public Object selectUserInfoCount(@RequestParam(value = "userName", required = false) String userName,
+            @RequestParam(value = "email", required = false) String email,
+            @RequestParam(value = "telphone", required = false) String telphone,
+            @RequestParam(value = "trueName", required = false) String trueName,
+            @RequestParam(value = "roleName", required = false) String roleName,
+            HttpServletRequest request) {
+    /*	if(null == userName && null == email && null == telphone && null == trueName && null == roleName){
+    		
+    	}else{*/
+        UserQueryCondition userQueryCondition = new UserQueryCondition();
+        userQueryCondition.setUserName(userName);
+        userQueryCondition.setEmail(email);
+        userQueryCondition.setTelphone(telphone);
+        userQueryCondition.setTrueName(trueName);
+        userQueryCondition.setRoleName(roleName);
+        long count = 0;
+        if(null == roleName){
+        	count = userService.selectUserByPageLimit(userQueryCondition).size();
+        }else{
+        	count = userService.selectUserCount(userQueryCondition);
+        }
+        if(count<=0){
+        	return ResultUtil.errorWithMsg("无用户信息！");
+        }
+        return ResultUtil.success(count);
+    }
+    
 }
+

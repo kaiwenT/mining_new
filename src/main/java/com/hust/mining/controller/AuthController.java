@@ -56,4 +56,17 @@ public class AuthController {
         List<User> user = userService.selectSingleUserInfo(username, request);
         return ResultUtil.success(user.get(0).getTrueName());
     }
+    
+    /**
+     * 请求得到当前用户的ID
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getCurrentUserId", method = RequestMethod.POST)
+    public Object getCurrentUserId(HttpServletRequest request) {
+        String username = userService.getCurrentUser(request);
+        List<User> user = userService.selectSingleUserInfo(username, request);
+        return ResultUtil.success(user.get(0).getUserId());
+    }
 }

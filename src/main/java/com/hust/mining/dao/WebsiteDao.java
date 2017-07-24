@@ -27,7 +27,11 @@ public class WebsiteDao {
     public String queryTypeByUrl(String url) {
         WebsiteExample example = new WebsiteExample();
         example.createCriteria().andUrlEqualTo(url);
-        return websiteMapper.selectByExample(example).get(0).getType();
+        List<Website> list = websiteMapper.selectByExample(example);
+        if(list == null || list.isEmpty()){
+        	return "";
+        }
+        return list.get(0).getType();
     }
 
     public Website queryByUrl(String url) {
@@ -56,6 +60,42 @@ public class WebsiteDao {
         List<Website> website = websiteMapper.selectByExample(example);
         return website;
     }
+    
+    public long selectWebsiteCount(){
+    	WebsiteExample example = new WebsiteExample();
+        Criteria criteria = example.createCriteria();
+        criteria.andIdIsNotNull();
+        criteria.andNameNotEqualTo("其他");
+    	return websiteMapper.countByExample(example);
+    }
+    
+    public long selectUnknowWebsiteCount(){
+    	WebsiteExample example = new WebsiteExample();
+        Criteria criteria = example.createCriteria();
+        criteria.andIdIsNotNull();
+        criteria.andNameEqualTo("其他");
+    	return websiteMapper.countByExample(example);
+    }
+    
+    public long selectWebsiteCount(WebsiteQueryCondition webSite){
+    	WebsiteExample example = new WebsiteExample();
+        Criteria criteria = example.createCriteria();
+        if (!StringUtils.isBlank(webSite.getUrl())) {
+            criteria.andUrlLike(webSite.getUrl());
+        }
+        if (!StringUtils.isBlank(webSite.getLevel())) {
+            criteria.andLevelLike(webSite.getLevel());
+        }
+        if (!StringUtils.isBlank(webSite.getName())) {
+            criteria.andNameLike("%"+webSite.getName()+"%");
+        }
+        if (!StringUtils.isBlank(webSite.getType())) {
+            criteria.andTypeLike(webSite.getType());
+        }
+        example.setStart(0);
+        example.setLimit(0);
+    	return websiteMapper.countByExample(example);
+    }
 
     public List<Website> selectAllWebsiteUnknow(int start, int limit) {
         WebsiteExample example = new WebsiteExample();
@@ -82,7 +122,7 @@ public class WebsiteDao {
             criteria.andLevelLike(webSite.getLevel());
         }
         if (!StringUtils.isBlank(webSite.getName())) {
-            criteria.andNameLike(webSite.getName());
+            criteria.andNameLike("%"+webSite.getName()+"%");
         }
         if (!StringUtils.isBlank(webSite.getType())) {
             criteria.andTypeLike(webSite.getType());
@@ -106,5 +146,12 @@ public class WebsiteDao {
 
     public int updateWebsite(Website website) {
         return websiteMapper.updateByPrimaryKeySelective(website);
+    }
+    
+    public int updateWebsiteInfo(Website website){
+    	WebsiteExample example = new WebsiteExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andUrlEqualTo(website.getUrl());
+    	return websiteMapper.updateByExampleSelective(website, example);
     }
 }

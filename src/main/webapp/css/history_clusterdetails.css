@@ -1,0 +1,68 @@
+@charset "utf-8";
+/* CSS Document */
+*{margin:0;padding:0;list-style-type:none;}
+a,img{border:0;}
+/*按钮样式*/
+#ClickMe {
+	width: 200px;
+	height: 30px;
+	border: 1px solid #C40000;
+	background-color: #000;
+	color: #FFF;
+	margin:0 auto;
+}
+#goodcover {
+	display: none;
+	position: fixed;
+	top: 0%;
+	left:0%;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	z-index: 1001;
+	-moz-opacity: 0.5;
+	opacity: 0.50;
+	filter: alpha(opacity=50);
+}
+#code {
+	width: 820px;
+	height: 500px;
+	background-color: #fff;
+	padding: 10px;
+	position: fixed;
+	display: none;
+	left: 45%;
+	z-index: 1002;
+}
+.close1 {
+	width: 800px;
+	height: 20px;
+}
+#closebt {
+	float: right;
+}
+#closebt img {
+	width: 20px;
+}
+.resetButton{
+	margin: 0 auto 10px 20px;
+}
+.clusterInfoList{
+	width: 800px;
+}
+.fixedHead { 
+	position: relative; 
+	top:expression(this.offsetParent.scrollTop-2); 
+} 
+.details_tab{width:800px; height:420px;;overflow-y:scroll; border:1px solid #0e63ab; text-align:center; }
+.details_tab tr{ border-bottom:1px solid #999999;}
+.details_tab table td{ border-right:1px solid #999999; border-bottom:1px solid #999999;}
+.details_tab tr a{display: inline-block; line-height:32px; height:32px; overflow: hidden;}
+.code-img {
+	width: 250px;
+	margin: 30px auto 0 auto;
+	padding: 10px;
+}
+.code-img img {
+	width: 240px;
+}

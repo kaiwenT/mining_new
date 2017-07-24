@@ -44,9 +44,28 @@ public class WeightController {
 		weightInfo.setLimit(limit);
 		List<Weight> weights = weightService.selectByCondition(weightInfo);
 		if (weights.isEmpty()) {
-			return ResultUtil.errorWithMsg("the condition not exist");
+			return ResultUtil.errorWithMsg("未找到相关权重信息！");
 		}
 		return ResultUtil.success(weights);
+	}
+
+	@ResponseBody
+	@RequestMapping("/selectWeightCount")
+	public Object selectWeightCount(@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "weight", required = false) Integer weight) {
+		long count = 0;
+		if (null == name && null == weight) {
+			count = weightService.selectCount();
+		} else {
+			WeightQueryCondition weightInfo = new WeightQueryCondition();
+			weightInfo.setName(name);
+			weightInfo.setWeight(weight);
+			count = weightService.selectCountByCondition(weightInfo);
+		}
+		if (count <= 0) {
+			return ResultUtil.errorWithMsg("未找到相关权重信息！");
+		}
+		return ResultUtil.success(count);
 	}
 
 	@ResponseBody

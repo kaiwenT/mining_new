@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>停用词管理--添加停用词</title>
+<script type="text/javascript" src="js/stopword_add.js"></script>
+</head>
+<body>
+
+	<div class="s_nav">
+		当前位置： <a href="javascript:;" onclick="baseAjax('stopword_infor')">停用词管理</a> >>添加停用词
+	</div>
+	<div class="ckht">
+		<div class="up_list_wrap" style="height: 400px">
+			<table width="730" border="0" class="infor_tab02">
+				<tr class="infor_tab02_tit">
+					<td colspan="2" height="40" align="center" valign="middle"
+						bgcolor="#86c6ea" class="d_blue">序号</td>
+					<td colspan="3" height="40" align="center" valign="middle"
+						bgcolor="#86c6ea" class="d_blue">停用词</td>
+				</tr>
+				<tr class="infor_tab02_tit">
+					<td colspan="2" height="40" align="center" valign="middle"
+						bgcolor="#ffffff">1</td>
+					<td colspan="3" height="40" align="center" valign="middle"
+						bgcolor="#ffffff"><input name="stopword" type="text" class="form-control"
+						style="width: 100%; height: 100%; text-align: center"
+						placeholder="请输入停用词"></td>
+				</tr>
+				<tr class="infor_tab02_tit" id="addStopword" data-num="1">
+					<td colspan="5" align="center" valign="middle">
+						<button type="button"  class="btn btn-primary" onClick="addStopwordInfor()">添加</button>
+					</td>
+				</tr>
+
+			</table>
+		</div>
+		<div>
+			<table width="730" border="0" class="infor_tab02">
+				<tr class="infor_tab02_tit">
+					<td colspan="5" align="right" valign="middle"
+						style="border: hidden;">
+						<button type="button"  class="btn btn-primary" onClick="addStopword()">提交</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+		新增文件：
+		<div class="files_add" id="drop_area">将文件拖拽到此处</div>
+		<div class="clear"></div>
+	</div>
+
+</body>
+</html>

@@ -1,29 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>创建任务</title>
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/loading.css">
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/loading.js"></script>
-	<script type="text/javascript" src="js/waiting.js"></script>
-    <script type="text/javascript" src="js/cjht.js"></script>
+<meta charset="UTF-8">
+<title>创建任务</title>
+<script type="text/javascript" src="js/cjht.js"></script>
 </head>
 <body>
-	<div class="main">
-		<iframe src="g_header.html" width=1000px" height="177px"></iframe>
-		<div class="content">
-			<iframe src="g_left.html" width=200px" height="740px"></iframe>
-			<div class="right float_r">
-				<div class="s_nav">当前位置：<a href="#">任务管理</a>>>创建任务</div>
-				<div class="cjht">
-                    <div class="ht_name">任务名称：<input type="text" class="input_ht_name" id="chuangjian" /><a href="#" class="btn_cj"><img src="images/chuangj.png" onclick="creatInt()" /></a></div>
-				</div>
-			</div>
-            <div class="clear"></div>
+	<div class="s_nav">
+		当前位置： <a href="javascript:;">任务管理 </a>>>创建任务
+	</div>
+	<!--  
+	<div style="font-size: 16px; margin: 10px auto;">
+		数据类型： <label style="color: red"><input name="issueType"
+			type="radio" checked="checked" value="extensive" />泛数据</label> <label><input
+			name="issueType" type="radio" value="standard"
+			style='margin-left: 5px' />准数据</label> <label><input
+			name="issueType" type="radio" value="core" style='margin-left: 5px' />核心数据</label>
+	</div>  -->
+	<div class="cjht">
+		<div class="ht_name">
+			任务名称：<input type="text" class="form-control" style="width:340px; padding-left:10px;" id="chuangjian" />
+			<button type="button"  class="btn btn-primary" onclick="creatInt()">创建</button>
 		</div>
-        <iframe src="g_footer.html" width="1000px" height="80px"></iframe>
 	</div>
 </body>
 </html>

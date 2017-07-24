@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hust.mining.model.SourceType;
 import com.hust.mining.model.params.SourceTypeQueryCondition;
+import com.hust.mining.model.params.WeightQueryCondition;
 import com.hust.mining.service.SourceTypeService;
 import com.hust.mining.util.ResultUtil;
 
@@ -32,11 +33,26 @@ public class SourceTypeContrller {
 	}
 
 	@ResponseBody
+	@RequestMapping("/selectSourceTypeCount")
+	public Object selectWeightCount(@RequestParam(value = "name", required = false) String name) {
+		long count = 0;
+		if(null == name){
+			count = sourceTypeService.selectSourceTypeCount();
+		}else{
+			count = sourceTypeService.selectSourceTypeCountByName(name);
+		}
+		if (count <= 0) {
+			return ResultUtil.errorWithMsg("未找到相关类型信息！");
+		}
+		return ResultUtil.success(count);
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "/selectSourceTypeByName")
 	public Object selectSourceTypeByName(@RequestParam(value = "name", required = true) String name,
 			@RequestParam(value = "start", required = true) int start,
 			@RequestParam(value = "limit", required = true) int limit) {
-		System.out.println(name);
+		//System.out.println(name);
 		SourceTypeQueryCondition sourceType = new SourceTypeQueryCondition();
 		sourceType.setName(name);
 		sourceType.setStart(start);

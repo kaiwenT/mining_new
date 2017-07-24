@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>文件汇总</title>
+<link rel="stylesheet" href="css/history_clusterdetails.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/page.css">
+<link rel="stylesheet" href="css/loading.css">
+<script type="text/javascript" src="js/history.js"></script>
+<script type="text/javascript" src="js/cluster_details.js"></script>
+<script type="text/javascript" src="js/dateformat.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/scxsj.js"></script>
+<script type="text/javascript" src="js/create_std_result.js"></script>
+</head>
+<body>
+
+	<div class="s_nav">
+		当前位置： <a href="javascript:;" onclick="baseAjax('topic_list')">任务管理</a>
+		<span>>>任务详情 </span>
+	</div>
+	 
+	 <div class="ckht">
+	 	<div class="btn-group" role="group" aria-label="..." style="float:right;">
+  			<button type="button" class="btn btn-default"  onclick="baseAjax('original_data')">原始数据</button>
+  			<button type="button" class="btn btn-default active" style="color:red" onclick="baseAjax('extensive_result')">泛数据</button>
+ 			<button type="button" class="btn btn-default" onclick="baseAjax('standard_result')">准数据</button>
+		</div>
+		<ul class="ckht_list">
+			 <li class="issueName">任务名称：</li>
+		 </ul>
+	 </div>
+	<div class="data_summary">
+		<div class="summary_wrap ">
+			<div class="summary_cont">
+				<div class="summary_tab">
+					<table width="730" border="0">
+						<tr>
+							<td width="60" height="36" align="center" bgcolor="#86c6ea">选择</td>
+							<td width="320" height="36" align="center" bgcolor="#86c6ea">标题</td>
+							<td width="150" height="36" align="center" bgcolor="#86c6ea">时间</td>
+							<td width="60" height="36" align="center" bgcolor="#86c6ea">数量</td>
+						</tr>
+					</table>
+				</div>
+				<div class="table_clear">
+					<label class="clear_choose"> <input type="checkbox"
+						style="width: 20px; height: 20px; float: left; margin-left: 15px;"
+						id="historyAll" /> <span>全选</span>
+					</label>
+					<div class="select_clusters" style=" width:140px; float:left; margin-top:16px;margin-left:20px;display: inline;">
+						<input style="width: 80px;" type="text" value="1" placeholder="请输入数量" class="form-control" id="clusternum_input" />
+                        <button type="button"  class="btn btn-primary" onclick="selectClusters()">选中</button> 
+					</div>
+					<button type="button"  class="btn btn-primary" style=" float:left;margin-top:16px;margin-left:20px;" onclick="addLayData()">合并</button>
+					<button type="button"  class="btn btn-primary" style=" float:left;margin-top:16px;margin-left:20px;" onclick="Reset()">重置</button>
+					<button type="button"  class="btn btn-danger" style=" float:left;margin-top:16px;margin-left:20px;" onclick="deleteLayData()">删除</button>
+					
+					
+					<button type="button"  class="btn btn-info" style="float: right;margin-top:16px; margin-right: 0px;" onclick="download()">下载泛数据</button>
+					<div class="clear"></div>
+					
+				</div>
+			</div>
+		</div>
+		
+		<li>
+				<div class="files_add" id="drop_area">将准数据文件拖拽到此处</div>
+		</li>
+		</ul>
+		<div class="up_del">
+			<ul id="file_ul">
+			</ul>
+			<button type="button"  class="btn btn-info" style="float: right;" id="create_std_result">生成准数据</button>
+		</div>
+	</div>
+
+	<!-- 遮罩div -->
+	<div id="goodcover"></div>
+	<div id="code">
+		<div class="close1">
+			<a href="javascript:void(0)" id="closebt"><img
+				src="images/close.gif"></a>
+		</div>
+		<div class="clusterInfoList">
+			<div class="resetButton">
+				<input type="checkbox"
+					style="width: 20px; height: 20px; float: left; display: inline-block; vertical-align: middle;"
+					id="clusterItemAll">&nbsp;<span
+					style="font-size: 18px; vertical-align: top;">全选</span></input>&nbsp;&nbsp;
+				<button type="button"  class="btn btn-danger" onclick="deleteClusterItem(-1)">删除</button>
+				<button type="button"  class="btn btn-primary" onclick="clusterItemsReset()" >重置</button>
+				&nbsp;
+			</div>
+			<div class="details_tab">
+				<table width="780" border="0">
+					<tr class="fixedHead">
+						<th width="60" height="36" align="center" bgcolor="#86c6ea">选择</th>
+						<th width="450" height="36" align="center" bgcolor="#86c6ea">标题</th>
+						<th width="200" height="36" align="center" bgcolor="#86c6ea">时间</th>
+						<th width="70" height="36" align="center" bgcolor="#86c6ea">操作</th>
+					</tr>
+
+				</table>
+
+			</div>
+
+		</div>
+
+	</div>
+</body>
+
+</html>

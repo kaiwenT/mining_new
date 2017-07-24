@@ -31,6 +31,15 @@ public class RoleDao {
 		List<Role> roles = roleMapper.selectByExample(example);
 		return roles;
 	}
+	
+	public long selectRoleCount(RoleQueryCondition role){
+		RoleExample example = new RoleExample();
+		Criteria criteria = example.createCriteria();
+		if (!StringUtils.isBlank(role.getRoleName())) {
+			criteria.andRoleNameLike("%" + role.getRoleName() + "%");
+		}
+		return roleMapper.countByExample(example);
+	}
 
 	public List<Role> selectRole() {
 		RoleExample example = new RoleExample();

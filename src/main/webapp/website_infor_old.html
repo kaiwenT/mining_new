@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>映射表管理——信息显示</title>
+<script type="text/javascript" src="js/website_old.js"></script>
+</head>
+<body>
+
+	<div class="s_nav">
+		当前位置： <a href="javascript:;">映射表管理</a> >>信息显示  <b style="color:red;text-">（已知url管理）</b>
+		<span style="float: right; text-align: right"><a
+			href="javascript:;"
+			style="font-weight: bold; text-decoration: underline"
+			onclick="baseAjax('unknow_website_infor')">切换未知url管理</a>
+		</span>
+	</div>
+	<div class="user_infor">
+		<table width="750" border="0" class="infor_tab01">
+			<tr>
+				<td width="85" height="50">网站URL：</td>
+				<td height="50"><input type="text" class="form-control" id="web_url"></td>
+				<td width="85" height="50">网站级别：</td>
+				<td height="50"><input type="text" class="form-control" id="web_level"></td>
+				<td height="50" colspan="2" />
+				<td height="50" colspan="2">
+					<form action="/website/downloadKnownUrl" method="POST">
+						<button type="submit" class="btn btn-success">导出已知url</button>
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<td width="85" height="50">网站名称：</td>
+				<td height="50"><input type="text" class="form-control" id="web_name"></td>
+				<td width="85" height="50">网站类型：</td>
+				<td height="50"><input type="text" class="form-control" id="web_type"></td>
+				<td height="50" colspan="2">
+					<button type="button"  class="btn btn-primary" onclick="initSearchPage(1)">搜 索</button>
+				</td>
+				<td height="50" colspan="2">
+					<button type="button"  class="btn btn-primary" onClick="websiteInforAdd()">添加映射表</button>
+				</td>
+			</tr>
+		</table>
+		<div class="infor_tablist">
+			<table width="720" border="0" class="infor_tab02">
+				<tr class="infor_tab02_tit">
+					<td width="42" height="45" align="center" bgcolor="#86c6ea">序号</td>
+					<td width="238" height="45" align="center" bgcolor="#86c6ea">网站URL</td>
+					<td width="83" height="45" align="center" bgcolor="#86c6ea">网站名称</td>
+					<td width="76" height="45" align="center" bgcolor="#86c6ea">网站级别</td>
+					<td width="77" height="45" align="center" bgcolor="#86c6ea">网站类型</td>
+					<td width="150" height="45" align="center" bgcolor="#86c6ea">操作</td>
+				</tr>
+			</table>
+		</div>
+		<div class="user_num" style="margin-right:0px;">
+			<ul class="page" maxshowpageitem="5" pagelistcount="10" id="page"></ul>
+		</div>
+	</div>
+</body>
+
+</html>

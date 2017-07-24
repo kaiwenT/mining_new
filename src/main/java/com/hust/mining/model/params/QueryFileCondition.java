@@ -8,6 +8,7 @@ public class QueryFileCondition {
     private String issueId;
     private Date start;
     private Date end;
+    private String fileId;
     private List<String> fileIds;
 
     public String getIssueId() {
@@ -41,5 +42,13 @@ public class QueryFileCondition {
     public void setFileIds(List<String> fileIds) {
         this.fileIds = fileIds;
     }
+
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
+	}
 
 }

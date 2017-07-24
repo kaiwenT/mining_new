@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>查看任务</title>
+<link rel="stylesheet" href="css/history_clusterdetails.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/page.css">
+<link rel="stylesheet" href="css/loading.css">
+<script type="text/javascript" src="js/datashow.js"></script>
+<script type="text/javascript" src="js/tuozhuai.js"></script>
+<script type="text/javascript" src="js/dateformat.js"></script>
+<script type="text/javascript" src="js/scxsj.js"></script>
+
+</head>
+<body>
+	<div class="s_nav">
+		当前位置： <a href="javascript:;" onclick="baseAjax('topic_list')">任务管理</a>
+		<span>>>任务详情 </span>
+	</div>
+	
+	<div class="ckht">
+		<ul class="ckht_list">
+			<div class="btn-group" role="group" aria-label="..." style="float:right;float:top; margin-bottom:20px;">
+	  			<button type="button" class="btn btn-default active" style="color:red" onclick="baseAjax('original_data')">原始数据</button>
+	  			<button type="button" class="btn btn-default" onclick="baseAjax('extensive_result')">泛数据</button>
+	 			<button type="button" class="btn btn-default" onclick="baseAjax('standard_result')">准数据</button>
+			</div>
+			<li class="issueName">任务名称：</li>
+
+			<li class="files_list">	
+				 			
+				<div class="up_list_wrap">
+					<table class="up_list" style="margin-bottom:-1px;">
+						<tr class="d_blue">
+							<td width="80" align="center" valign="middle" bgcolor="#86c6ea" class="d_blue"> 
+							    <input type="checkbox"style="width: 20px; height: 20px; "id ="allfile" /> <span>全选</span></td>
+							<td width="205" align="center" valign="middle" bgcolor="#86c6ea" class="d_blue">文件名称</td>
+							<td width="85" align="center" valign="middle" bgcolor="#86c6ea" class="d_blue">上传人</td>
+							<td width="160" align="center" valign="middle" bgcolor="#86c6ea" class="d_blue">上传时间</td>
+							<td width="230" align="center" valign="middle" bgcolor="#86c6ea" class="d_blue">操作</td>
+						</tr>
+					</table>
+				</div> 
+			</li>
+			<button type="button"  class="btn btn-primary" style="float:right;margin-right: 20px; margin-top: 10px;" onclick="fileSummary()">汇总并聚类</button> 
+			<li style="margin-top:20px;">新增文件：
+				<div class="files_add" id="drop_area">将文件拖拽到此处</div>
+			</li>
+		</ul>
+		<div class="up_del">
+			<ul id="file_ul">
+			</ul>
+			<button type="button"  class="btn btn-danger" style="float:right;" onclick="allDel()">全部删除</button>
+			<button type="button"  class="btn btn-primary btn_up_del03" >全部上传</button>
+		</div>
+	</div>
+</body>
+</html>

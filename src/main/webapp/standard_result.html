@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>文件汇总</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/page.css">
+<link rel="stylesheet" href="css/loading.css">
+<script type="text/javascript" src="js/standard_result.js"></script>
+<script type="text/javascript" src="js/dateformat.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+</head>
+<body>
+
+	<div class="s_nav">
+		当前位置： <a href="javascript:;" onclick="baseAjax('topic_list')">任务管理</a>
+		<span>>>任务详情 </span>
+	</div>
+	 
+   <!-- 
+	<div class="s_nav">
+		当前位置： <a href="javascript:;" onclick="baseAjax('topic_list')">任务管理</a>
+		>> <a a href="javascript:;"
+			onclick="baseAjax('topic_details_extensive')">任务详情</a> >>历史记录
+	</div>
+	 -->
+	 <div class="ckht">
+		<ul class="ckht_list">
+		    <div class="btn-group" role="group" aria-label="..." style="float:right;">
+	  			<button type="button" class="btn btn-default"  onclick="baseAjax('original_data')">原始数据</button>
+  				<button type="button" class="btn btn-default"  onclick="baseAjax('extensive_result')">泛数据</button>
+ 				<button type="button" class="btn btn-default active" style="color:red" onclick="baseAjax('standard_result')">准数据</button>
+			</div>
+			 <li class="issueName">任务名称：</li>
+			 <!-- <li class="files_list">文件列表：</li> -->
+		 </ul>
+	 </div>
+	<div class="data_summary">
+		<div class="summary_wrap ">
+			<div class="summary_cont">
+				<div class="summary_tab" style="height: 500px;">
+					<table width="730" border="0" style="margin-bottom:-1px;">
+						<tr>
+							<td width="60" height="36" align="center" bgcolor="#86c6ea">序号</td>
+							<td width="320" height="36" align="center" bgcolor="#86c6ea">标题</td>
+							<td width="150" height="36" align="center" bgcolor="#86c6ea">时间</td>
+							<td width="60" height="36" align="center" bgcolor="#86c6ea">数量</td>
+						</tr>
+					</table>
+				</div>
+				<div class="table_clear">		
+					
+					<button type="button"  class="btn btn-info" style="float: right;margin-top:16px; margin-right: 0px;" id="create_core_result">下载结果数据</button>
+					<div class="clear"></div>
+					
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</body>
+</html>

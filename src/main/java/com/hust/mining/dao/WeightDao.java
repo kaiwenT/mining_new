@@ -11,6 +11,7 @@ import com.hust.mining.model.Weight;
 import com.hust.mining.model.WeightExample;
 import com.hust.mining.model.WeightExample.Criteria;
 import com.hust.mining.model.params.WeightQueryCondition;
+
 @Repository
 public class WeightDao {
 
@@ -25,6 +26,25 @@ public class WeightDao {
 			return 0;
 		}
 		return list.get(0).getWeight();
+	}
+
+	public long selectCountOfWeight() {
+		WeightExample example = new WeightExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andIdIsNotNull();
+		return weightMapper.countByExample(example);
+	}
+
+	public long selectCountOfWeight(WeightQueryCondition weight) {
+		WeightExample example = new WeightExample();
+		Criteria criteria = example.createCriteria();
+		if (!StringUtils.isBlank(weight.getName())) {
+			criteria.andNameLike("%" + weight.getName() + "%");
+		}
+		if (weight.getWeight() != null) {
+			criteria.andWeightEqualTo(weight.getWeight());
+		}
+		return weightMapper.countByExample(example);
 	}
 
 	public List<Weight> selectAllWeight(int start, int limit) {

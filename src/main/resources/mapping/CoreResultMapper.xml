@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hust.mining.dao.mapper.CoreResultMapper">
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+	<resultMap id="BaseResultMap" type="com.hust.mining.model.CoreResult">
+		<id column="core_rid" jdbcType="VARCHAR" property="coreRid" />
+		<result column="res_name" jdbcType="VARCHAR" property="resName" />
+		<result column="issue_id" jdbcType="VARCHAR" property="issueId" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="creator" jdbcType="VARCHAR" property="creator" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		core_rid, res_name, issue_id, create_time, creator
+	</sql>
+	<select id="selectByExample" parameterType="com.hust.mining.model.CoreResultExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from core_result
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select 'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from core_result
+		where core_rid = #{coreRid,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from core_result
+		where core_rid = #{coreRid,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.hust.mining.model.CoreResultExample">
+		delete from core_result
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.hust.mining.model.CoreResult">
+		insert into core_result (core_rid, res_name, issue_id,
+		create_time, creator)
+		values (#{coreRid,jdbcType=VARCHAR}, #{resName,jdbcType=VARCHAR},
+		#{issueId,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.hust.mining.model.CoreResult">
+		insert into core_result
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="coreRid != null">
+				core_rid,
+			</if>
+			<if test="resName != null">
+				res_name,
+			</if>
+			<if test="issueId != null">
+				issue_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="creator != null">
+				creator,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="coreRid != null">
+				#{coreRid,jdbcType=VARCHAR},
+			</if>
+			<if test="resName != null">
+				#{resName,jdbcType=VARCHAR},
+			</if>
+			<if test="issueId != null">
+				#{issueId,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator != null">
+				#{creator,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.hust.mining.model.CoreResultExample"
+		resultType="java.lang.Long">
+		select count(*) from core_result
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update core_result
+		<set>
+			<if test="record.coreRid != null">
+				core_rid = #{record.coreRid,jdbcType=VARCHAR},
+			</if>
+			<if test="record.resName != null">
+				res_name = #{record.resName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.issueId != null">
+				issue_id = #{record.issueId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createTime != null">
+				create_time = #{record.createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.creator != null">
+				creator = #{record.creator,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update core_result
+		set core_rid = #{record.coreRid,jdbcType=VARCHAR},
+		res_name = #{record.resName,jdbcType=VARCHAR},
+		issue_id = #{record.issueId,jdbcType=VARCHAR},
+		create_time = #{record.createTime,jdbcType=TIMESTAMP},
+		creator = #{record.creator,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.hust.mining.model.CoreResult">
+		update core_result
+		<set>
+			<if test="resName != null">
+				res_name = #{resName,jdbcType=VARCHAR},
+			</if>
+			<if test="issueId != null">
+				issue_id = #{issueId,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator != null">
+				creator = #{creator,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where core_rid = #{coreRid,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.hust.mining.model.CoreResult">
+		update core_result
+		set res_name = #{resName,jdbcType=VARCHAR},
+		issue_id = #{issueId,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		creator = #{creator,jdbcType=VARCHAR}
+		where core_rid = #{coreRid,jdbcType=VARCHAR}
+	</update>
+</mapper>

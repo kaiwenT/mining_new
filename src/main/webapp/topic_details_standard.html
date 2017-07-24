@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>查看任务</title>
+<!-- 引入遮罩的样式 -->
+<link rel="stylesheet" href="css/history_clusterdetails.css">
+</head>
+<body>
+	<div class="s_nav">
+		当前位置： <a href="javascript:;" onclick="baseAjax('topic_list')">任务管理</a>
+		<span>>>任务详情 </span><span style="color: red; font-weight: bold;">（准数据）</span>
+		
+	</div>
+	<div class="ckht">
+		<div class="btn-group" role="group" aria-label="..." style="float:right;">
+  			<button type="button" class="btn btn-default" onclick="baseAjax('topic_details_extensive')">原始数据</button>
+  			<button type="button" class="btn btn-default" onclick="baseAjax('history')">泛数据</button>
+ 			<button type="button" class="btn btn-default" onclick="baseAjax('topic_details_standard')">准数据</button>
+		    <button type="button" class="btn btn-default">待定</button>
+		</div>
+		<ul class="ckht_list">
+			<li class="issueName">任务名称：</li>
+			<li class="files_list">文件列表：
+				<button type="button"  type="button" id="attachlabel" class="btn btn-primary">贴标签</button>
+				<div class="up_list_wrap">
+					<table border="0" class="up_list">
+						<tr class="d_blue">
+							<td width="50" align="center" valign="middle" bgcolor="#86c6ea"
+								class="d_blue">序号</td>
+							<td width="200" align="center" valign="middle" bgcolor="#86c6ea"
+								class="d_blue">文件名称</td>
+							<td width="85" align="center" valign="middle" bgcolor="#86c6ea"
+								class="d_blue">上传人</td>
+							<td width="160" align="center" valign="middle" bgcolor="#86c6ea"
+								class="d_blue">上传时间</td>
+							<td width="265" align="center" valign="middle" bgcolor="#86c6ea"
+								class="d_blue">操作</td>
+						</tr>
+					</table>
+				</div>
+			</li>
+		</ul>
+	</div>
+
+	<!-- 遮罩div -->
+	<div id="goodcover"></div>
+	<div id=code
+		style="min-height: 200px; width: 730px; position: relative;">
+		<div class="close1" style="float: right;">
+			<a href="javascript:void(0)" id="closebt"><img
+				src="images/close.gif"></a>
+		</div>
+		<ul id=myTab class="nav nav-tabs" role="tablelist">
+			<li role="presentation" class="active"><a href="#fileInfo"
+				aria-controls="fileInfo" role="tab" data-toggle="tab">任务-标签信息</a></li>
+			<li role="presentation"><a href="#labInfo"
+				aria-controls="labInfo" role="tab" data-toggle="tab">标签管理</a></li>
+		</ul>
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active"
+				style="width:710px;padding:10px 20px; height: 427px; overflow-y: scroll;" id="fileInfo">
+				<span style="display: block">网站统计信息：</span>
+				<div id="websiteCountInfo"
+					style="border: 1px solid; border-radius: 5px; width: 670px; min-height: 145px; margin: 10px auto;">
+
+				</div>
+				<span style="display: block">已贴标签：</span>
+				<div id="labelofStandard"
+					style="border: 1px solid; border-radius: 5px; width: 670px; min-height: 45px; margin: 10px auto;">
+					
+				</div>
+				<span style="display: block">未贴标签：</span>
+				<div id="labelNotinStandard"
+					style="border: 1px solid; border-radius: 5px; width: 670px; min-height: 85px; margin: 10px auto;">
+					
+				</div>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="labInfo">
+				<div style="width:710px;padding:10px 20px;" id="labelInfo">
+					<div class="role_search_input">
+						<input type="search" placeholder="请输入标签名称" class="form-control"
+							id="label_Search" /> <img src="images/icon_search.png"
+							class="icon_search" />
+							<button type="button" style="margin-left: 10px;float:right;" class="btn btn-primary" onclick="labelInforAdd()">添加标签</button>
+							<button type="button" class="btn btn-primary" onClick="initSearchPage(1)"
+								style="margin-left: 10px;float:right;">搜 索</button>
+						</div>
+					<div class="infor_tablist" style="width: 670px;">
+						<table width="670" border="0" class="infor_tab02">
+							<tr class="infor_tab02_tit">
+								<td width="169" height="45" align="center" bgcolor="#86c6ea">标签编号</td>
+								<td width="231" height="45" align="center" bgcolor="#86c6ea">标签名称</td>
+								<td colspan="2" height="45" align="center" bgcolor="#86c6ea">操作</td>
+							</tr>
+						</table>
+					</div>
+					<div class="user_num"
+						style="position: absolute; right: 0px; bottom: 0px;">
+						<ul class="page" maxshowpageitem="5" pagelistcount="7" id="page"></ul>
+					</div>
+				</div>
+				<div id="addLabel" style="width:100%;height:100%;display: none;">
+					<div style="width:310px;height: 120px; margin: 100px auto; position: relative;">
+						<form>
+							<table width="470" border="0" class="change_tab">
+								<tr>
+									<td width="100" height="50">标签名称：</td>
+									<td width="200" height="50"><input type="text" class="form-control"
+										id="namelabel" /></td>
+									<td width="160" height="50">&nbsp;</td>
+								</tr>
+								<tr>
+									<td width="100" height="80">
+										<button type="button"  class="btn btn-primary" onclick="addlabel()">提交</button>
+									</td>
+									<td width="200" height="80">
+										<button type="button"  class="btn btn-primary" onclick="backLabelInfor()">返回</button>
+									</td>
+									<td width="160" height="80">&nbsp;</td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+				<div id="editLabel" style="width:100%;height:100%; display: none;">
+					<div style="width:310px;height: 120px; margin: 100px auto; position: relative;">
+						<form>
+							<table width="470" border="0" class="change_tab">
+								<tr>
+									<td width="100" height="50">标签名称：</td>
+									<td width="200" height="50"><input type="text" class="form-control"
+										id="new_name_label" /></td>
+									<td width="160" height="50">&nbsp;</td>
+								</tr>
+								<tr>
+									<td width="100" height="80">
+										<button type="button"  class="btn btn-primary" onclick="labelInforChange()">提交</button>
+									</td>
+									<td width="200" height="80">
+										<button type="button"  class="btn btn-primary" onclick="backLabelInfor()">返回</button>
+									</td>
+									<td width="160" height="80">&nbsp;</td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="js/datashow.js"></script>
+<script type="text/javascript" src="js/dateformat.js"></script>
+<script type="text/javascript" src="js/scxsj.js"></script>
+<script type="text/javascript" src="js/label.js"></script>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>算法选择管理——配置算法</title>
+<script type="text/javascript" src="js/algorithm.js"></script>
+</head>
+<body>
+	<div class="s_nav">
+		当前位置： <a href="javascript:;">算法选择管理</a> >>配置算法
+	</div>
+	<div class="algorithm_infor" style="width: 800px;">
+		<table
+			style="width: 640px; height: 350px; margin-left: 55px; margin-top: 30px;"
+			border="2">
+			<tr class="infor_tab02_tit" align="center"
+				style="height: 70px; font-size: 20px;">
+				<th bgcolor="#86c6ea">算法选择</th>
+				<th bgcolor="#86c6ea">粒度选择</th>
+			</tr>
+			<tr>
+				<td colspan="1" style="width: 50%">
+					<ul style="height: 240px; font-size: 18px;">
+						<li style="margin: 38px 40px; display: block; height: 35px;"><input
+							name="algorithm_choose" type="radio" value="1" checked="checked">Canopy</li>
+						<li style="margin: 38px 40px; display: block; height: 35px;"><input
+							name="algorithm_choose" type="radio" value="2">kmeans和Canopy</li>
+						<li style="margin: 38px 40px; display: block; height: 35px;"><input
+							name="algorithm_choose" type="radio" value="3">DBScan</li>
+					</ul>
+				</td>
+				<td colspan="1" style="width: 50%">
+					<ul style="height: 240px; font-size: 18px;">
+						<li style="margin: 38px 40px; display: block; height: 35px;"><input
+							name="grain_size_choose" type="radio" value="1" checked="checked">粗粒度</li>
+						<li style="margin: 38px 40px; display: block; height: 35px;"><input
+							name="grain_size_choose" type="radio" value="2">细粒度</li>
+					</ul>
+				</td>
+			</tr>
+			<tr class="infor_tab01">
+				<td colspan="2" align="center" style="height: 35px;"><button type="button"
+					class="btn btn-primary"	onclick="algorithm_submit()">提交</button></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

@@ -160,7 +160,7 @@ public class RedisFacade {
         boolean flag = false;
         try {
             jedis = masterJedisPool.getResource();
-            System.out.println("port:" + jedis.info().substring(252, 265));
+            //System.out.println("port:" + jedis.info().substring(252, 265));
             byte[] realKey = key.getBytes(CHARSET);
             byte[] valueByteArray = jedis.get(realKey);
             if (!ArrayUtils.isEmpty(valueByteArray)) {

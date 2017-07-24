@@ -10,9 +10,6 @@ function typeInforShow(page){
 			limit:10
 		},
 		dataType:"json",
-		beforeSend : function(){
-            begin();
-        },
 		success: function(msg){
 		    $('.infor_tab02 tr:not(:first)').html("");
 			if( msg.status == "OK"){
@@ -22,22 +19,66 @@ function typeInforShow(page){
 				$.each(items,function(idx,item) {
 					cookie_value1="'"+item.id+"'";
 					cookie_value2="'"+item.name+"'";
-					row= '<tr><td width="169" height="30" align="center" bgcolor="#ffffff">'+(idx+1)+'</td><td width="231" height="30" align="center" bgcolor="#ffffff">'+item.name+'</td><td colspan="2" width="140" height="30" align="center" bgcolor="#ffffff"><img src="images/user_bj.png" onClick="setCookie('+cookie_value1+','+cookie_value2+')" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascripy:;"><img src="images/user_del.png" class="delType" id="'+item.id+'" /></a></td></tr>'
+					row= '<tr><td width="169" height="40" align="center" bgcolor="#ffffff">'+((page-1)*10+idx+1)+'</td><td width="231" height="40" align="center" bgcolor="#ffffff">'+item.name+'</td><td colspan="2" width="140" height="40" align="center" bgcolor="#ffffff"><button type="button" class="btn btn-primary" onClick="setCookie('+cookie_value1+','+cookie_value2+')" >编辑</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-danger delType" id="'+item.id+'">删除</button></td></tr>'
 					$('.infor_tab02').append(row);
 				});
 			}else{
 			    alert(msg.result);
 			}
 		},
-		complete : function() {
-            stop();
-        },
 		error: function(){
 			alert("数据请求失败");
 		}
 	})	
 }
-typeInforShow(1)
+function initShowPage(currenPage){
+    var listCount = 0;
+    if("undefined" == typeof(currenPage) || null == currenPage){
+        currenPage = 1;
+    }
+    $.ajax({
+        type: "post",
+        url: "/sourceType/selectSourceTypeCount",
+        dataType: "json",
+        success: function (msg) {
+            if (msg.status == "OK") {
+                // alert("success");
+                listCount = msg.result;
+                $("#page").initPage(listCount,currenPage,typeInforShow);
+            } else {
+                alert(msg.result);
+            }
+        },
+        error: function () {
+            alert("数据请求失败");
+        }})
+}
+initShowPage(1)
+
+function initSearchPage(currenPage){
+    var listCount = 0;
+    if("undefined" == typeof(currenPage) || null == currenPage){
+        currenPage = 1;
+    }
+    $.ajax({
+        type: "post",
+        url: "/sourceType/selectSourceTypeCount",
+        data:{
+        	name:$("#type_search").val()},
+        dataType: "json",
+        success: function (msg) {
+            if (msg.status == "OK") {
+                // alert("success");
+                listCount = msg.result;
+                $("#page").initPage(listCount,currenPage,typeInforSearch);
+            } else {
+                alert(msg.result);
+            }
+        },
+        error: function () {
+            alert("数据请求失败");
+        }})
+}
 
 function setCookie(value1,value2){
 	// alert(name+value);
@@ -48,15 +89,16 @@ function setCookie(value1,value2){
 	exp.setTime(exp.getTime() +Days*24*60*60*1000);
 	document.cookie = cookie_name1 +"="+ escape (value1) + ";expires=" + exp.toGMTString();
 	document.cookie = cookie_name2 +"="+ escape (value2) + ";expires=" + exp.toGMTString();
-	window.location.href = "type_change.html";
+	baseAjax("type_change");
 }
+/*
 
-/**
+/!**
  * 根据页码加载数据
  * 
  * @param {整型}
  *            page 页码
- */
+ *!/
 var search_click;
 function setViewForPage(page){
 		
@@ -67,9 +109,9 @@ function setViewForPage(page){
 	}
 }
 
-/**
+/!**
  * 省略号点击
- */
+ *!/
 function setPageChangeView(){
 	var bt_name=parseInt($("#other").attr('name'))+3;
 	updatePageValue(bt_name);
@@ -77,12 +119,12 @@ function setPageChangeView(){
 	setFirstSelected();
 	updateNowPage(bt_name);
 }
-/**
+/!**
  * 更新页码数据
  * 
  * @param {Object}
  *            base_num
- */
+ *!/
 function updatePageValue(base_num){
 	var p1=parseInt(base_num);
 	var p2=parseInt(base_num)+1;
@@ -92,12 +134,12 @@ function updatePageValue(base_num){
 	$("#p_3").val(p3);
 	$("#other").attr('name',p1);
 }
-/**
+/!**
  * 页码点击
  * 
  * @param {Object}
  *            p_id 页码
- */
+ *!/
 function pageNumClick(p_id){
 	// background: #0e63ab;
     // color: #fff;
@@ -112,9 +154,9 @@ function pageNumClick(p_id){
 		button.style.color='#FFFFFF';
 	}
 }
-/**
+/!**
  * 设置第一个页码按钮为选中状态
- */
+ *!/
 function setFirstSelected(){
 	cleanAllSelected();
 	$("#p_1").css("background","#0e63ab");
@@ -130,9 +172,9 @@ function setThirdSelected(){
 	$("#p_3").css("background","#0e63ab");
 	$("#p_3").css("color","#FFFFFF");
 }
-/**
+/!**
  * 清除所有的选中状态
- */
+ *!/
 function cleanAllSelected(){
 	$("#p_1").css("background","#CCCCCC");
 	$("#p_1").css("color","buttontext");
@@ -141,12 +183,12 @@ function cleanAllSelected(){
 	$("#p_3").css("background","#CCCCCC");
 	$("#p_3").css("color","buttontext");
 }
-/**
+/!**
  * 上一页，下一页点击
  * 
  * @param {Object}
  *            action -1上一页，1下一页
- */
+ *!/
 function changPageOne(action){
 	var now_page=parseInt($("#down_page").attr('name'));
 	var page=now_page+action;
@@ -154,9 +196,9 @@ function changPageOne(action){
 		updateAllStyleAndData(page,action);
 	}
 }
-/**
+/!**
  * 跳zhuan
- */
+ *!/
 function changePage(){
 	var page=$(".go_num").val();
 	if(page!=undefined&&page.length>0){
@@ -183,21 +225,21 @@ function updateAllStyleAndData(page,action){
 		}
 	}
 }
-/**
+/!**
  * 更新当前页码
  * 
  * @param {Object}
  *            page 当前页
- */
+ *!/
 function updateNowPage(page){
 	$("#down_page").attr('name',page);
 }
+*/
 
 // 信息搜索
 function typeInforSearch(page){
 	search_click=true;
-	console.log($("#type_search").val());
-	setFirstSelected();
+//	console.log($("#type_search").val());
 	$.ajax({
 		type:"post",
 		url:"/sourceType/selectSourceTypeByName",
@@ -207,30 +249,24 @@ function typeInforSearch(page){
 			limit:10
 		},
 		dataType:"json",
-		beforeSend : function(){
-            begin();
-        },
 		success: function(msg){
 		    $('.infor_tab02 tr:not(:first)').html("");
 			if( msg.status == "OK"){
 				var items = msg.result ;
 				var cookie_value1;
 				var cookie_value2;
-				console.log(items);
+//				console.log(items);
 				var cookie_name="'typeName'";
 				$.each(items,function(idx,item) {
 					cookie_value1="'"+item.id+"'";
 					cookie_value2="'"+item.name+"'";
-					row= '<tr><td width="169" height="30" align="center" bgcolor="#ffffff">'+(idx+1)+'</td><td width="231" height="30" align="center" bgcolor="#ffffff">'+item.name+'</td><td colspan="2" width="140" height="30" align="center" bgcolor="#ffffff"><img src="images/user_bj.png" onClick="setCookie('+cookie_value1+','+cookie_value2+')" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascripy:;"><img src="images/user_del.png" class="delType" id="'+item.id+'" /></a></td></tr>'
+					row= '<tr><td width="169" height="40" align="center" bgcolor="#ffffff">'+((page-1)*10+idx+1)+'</td><td width="231" height="40" align="center" bgcolor="#ffffff">'+item.name+'</td><td colspan="2" width="140" height="40" align="center" bgcolor="#ffffff"><button type="button" class="btn btn-primary" onClick="setCookie('+cookie_value1+','+cookie_value2+')" >编辑</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-danger delType" id="'+item.id+'" >删除</button></td></tr>'
 					$('.infor_tab02').append(row);
 				});
 			}else{
 				 alert(msg.result);
 			}
 		},
-		complete : function() {
-            stop();
-        },
 		error: function(){
             alert("数据请求失败");
         },
@@ -240,7 +276,7 @@ function typeInforSearch(page){
 
 // 用户添加
 function typeInforAdd() {
-	window.location.href = "type_add.html";
+	baseAjax("type_add");
 }
 function AddtypeInfor(){
 	var submit=$("#addType").val().replace(' ','');
@@ -255,20 +291,14 @@ function AddtypeInfor(){
 			name:submit
 		},
 		dataType:"json",
-		beforeSend : function(){
-            begin();
-        },
 		success: function(msg){
-			console.log(msg);
+//			console.log(msg);
 			if( msg.status == "OK"){
-				window.location.href="/type_infor.html"
+				baseAjax("type_infor");
 			}else{
 				alert(msg.result);
 			}
 		},
-		complete : function() {
-            stop();
-        },
 		error: function(){
             alert("数据请求失败");
         }
@@ -284,7 +314,7 @@ function clearType(){
 // 用户编辑
 function getCookie(name) {
 	
-	console.log(document.cookie);
+//	console.log(document.cookie);
 	var arr =document.cookie.match(new RegExp("(^|)"+name+"=([^;]*)(;|$)"));
 	if(arr !=null) 
 		return unescape(arr[2]); 
@@ -306,21 +336,15 @@ function ChangetypeInfor(){
 			id:newId
 		},
 		dataType:"json",
-		beforeSend : function(){
-            begin();
-        },
 		success: function(msg){
-			console.log(msg);
+//			console.log(msg);
 			if( msg.status == "OK"){
 				alert("修改成功");	
-				// window.location.href = "type_infor.html";
+				baseAjax("type_infor");
 			}else{
 				alert(msg.result);
 			}
 		},
-		complete : function() {
-            stop();
-        },
 		error: function(){
             alert("数据请求失败");
         }
@@ -346,9 +370,9 @@ $(function(){
 				dataType:"json",
 				success:function(msg){
 					// alert("lll");
-					console.log(msg);
+//					console.log(msg);
 					if(msg.status=="OK"){
-						window.location.href='/type_infor.html';
+						baseAjax("type_infor");
 					}else{
 						alert(msg.result);
 					}

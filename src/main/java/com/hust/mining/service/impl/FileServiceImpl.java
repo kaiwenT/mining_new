@@ -23,7 +23,6 @@ import com.hust.mining.service.FileService;
 import com.hust.mining.service.IssueService;
 import com.hust.mining.service.UserService;
 import com.hust.mining.util.ExcelUtil;
-import com.hust.mining.util.WeiboUtil;
 
 @Service
 public class FileServiceImpl implements FileService {
@@ -47,17 +46,15 @@ public class FileServiceImpl implements FileService {
         List<String[]> list = new ArrayList<String[]>();
         InputStream is = null;
         try {
-            is = file.getInputStream();
             // 此处index传入的顺序必须与constants中定义的value值保持一致
-            list = ExcelUtil.read(file.getOriginalFilename(), is, 1, -1, con.getUrlIndex(), con.getTitleIndex(),
-                    con.getTimeIndex());
+            list = ExcelUtil.readAll(file.getOriginalFilename(), file.getInputStream(), con.getUrlIndex());
         } catch (IOException e) {
             logger.error("读取文件出现异常\t" + e.toString());
             return 0;
         }
-        if(con.getSourceType().equals("微博")){
-            WeiboUtil.filter(list);
-        }
+//        if(con.getSourceType().equals("微博")){
+//            WeiboUtil.filter(list);
+//        }
         String user = userService.getCurrentUser(request);
         String issueId = issueService.getCurrentIssueId(request);
         Issue issue = new Issue();
@@ -81,6 +78,12 @@ public class FileServiceImpl implements FileService {
         return fileDao.deleteById(fileId);
     }
 
+	@Override
+	public List<String[]> getContentById(String path, String name) {
+		// TODO Auto-generated method stub
+		return fileDao.getContentById(path, name);
+	}
+    
     @Override
     public List<IssueFile> queryFilesByIssueId(String issueId) {
         // TODO Auto-generated method stub
@@ -92,5 +95,4 @@ public class FileServiceImpl implements FileService {
         // TODO Auto-generated method stub
         return fileDao.searchFilesByTime(issueId, start, end);
     }
-
 }

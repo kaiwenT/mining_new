@@ -9,7 +9,7 @@ function setCookie(key, value) {
 }
 
 function getCookie(key) {
-    console.log(document.cookie);
+//    console.log(document.cookie);
     var arr =document.cookie.match(new RegExp("(^|)"+key+"=([^;]*)(;|$)"));
     if(arr !=null) 
         return unescape(arr[2]); 

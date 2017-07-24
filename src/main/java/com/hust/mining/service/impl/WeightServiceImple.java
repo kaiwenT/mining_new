@@ -90,4 +90,16 @@ public class WeightServiceImple implements WeightService {
 		return weights;
 	}
 
+	@Override
+	public long selectCount() {
+		// TODO Auto-generated method stub		
+		return weightDao.selectCountOfWeight();
+	}
+
+	@Override
+	public long selectCountByCondition(WeightQueryCondition condition) {
+		// TODO Auto-generated method stub		
+		return weightDao.selectCountOfWeight(condition);
+	}
+
 }

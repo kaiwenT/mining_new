@@ -1,5 +1,6 @@
 package com.hust.mining.util;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,4 +41,29 @@ public class TimeUtil {
 		Date now = new Date();
 		return now;
 	}
+	/**
+	 * 
+	 * @param DATE1
+	 * @param DATE2
+	 * @return 1 if DATE1(后) > DATE2(前)
+	 * @return -1 if DATE1(前) < DATE2(后)
+	 * @return 0 if DATE1 = DATE2 
+	 */
+	public static int compare_date(String DATE1, String DATE2) {        
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        try {
+            Date dt1 = df.parse(DATE1);
+            Date dt2 = df.parse(DATE2);
+            if (dt1.getTime() > dt2.getTime()) {                
+                return 1;
+            } else if (dt1.getTime() < dt2.getTime()) {              
+                return -1;
+            } else {
+                return 0;
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return 0;
+    }
 }

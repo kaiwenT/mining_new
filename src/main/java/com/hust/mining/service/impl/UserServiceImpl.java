@@ -22,6 +22,7 @@ import com.hust.mining.model.Role;
 import com.hust.mining.model.RolePower;
 import com.hust.mining.model.User;
 import com.hust.mining.model.UserRole;
+import com.hust.mining.model.params.RoleQueryCondition;
 import com.hust.mining.model.params.UserQueryCondition;
 import com.hust.mining.service.RedisService;
 import com.hust.mining.service.UserService;
@@ -63,18 +64,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean deleteUserInfoById(int userId, HttpServletRequest request) {
-        List<UserRole> userRole = userRoleDao.selectUserRoleByUserId(userId);
-        List<Integer> id = new ArrayList<>();
-        for (UserRole userRoleInfo : userRole) {
-            id.add(userRoleInfo.getId());
-        }
-        for (int idInfo : id) {
-            int status = userRoleDao.deleteUserRoleByUserId(idInfo);
-            if (status == 0) {
-                logger.info("delete userRole id error");
-                return false;
-            }
-        }
+//        List<UserRole> userRole = userRoleDao.selectUserRoleByUserId(userId);
+//        List<Integer> id = new ArrayList<>();
+//        for (UserRole userRoleInfo : userRole) {
+//            id.add(userRoleInfo.getId());
+//        }
+//        for (int idInfo : id) {
+//            int status = userRoleDao.deleteUserRoleByUserId(idInfo);
+//            if (status == 0) {
+//                logger.info("delete userRole id error");
+//                return false;
+//            }
+//        }
+    	//用户ID为用户角色表的一个外键，删除用户，用户角色表中记录自动删除
         int statue = userDao.deleteByPrimaryKey(userId);
         if (statue == 0) {
             logger.info("delete userinfo error ");
@@ -83,6 +85,19 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    @Override
+    public boolean updateUser(User user)
+    {
+    	int i=userDao.updateByPrimaryKeySelective(user);
+    	if (i==0) {
+    		
+    		logger.info("update algorithm and granularity is error");
+    		return false;
+			
+		}
+    	return true;
+    }
+    
     @Override
     public boolean updateUserInfo(User user, List<String> roleName) {
         // 根据ID找出这个用户的用户名
@@ -94,11 +109,12 @@ public class UserServiceImpl implements UserService {
                 return false;
             }
         }
-        int statue = userDao.updateByPrimaryKey(user);
+        //更新用户信息
+        int statue = userDao.updateByPrimaryKeySelective(user);
         userRoleDao.deleteUserRoleByUserId(user.getUserId());
         List<Integer> roleIds = new ArrayList<Integer>();
         for (String roleNameInfo : roleName) {
-            System.out.println(roleName);
+            //System.out.println(roleName);
             List<Role> role = roleDao.selectRoleByName(roleNameInfo);
             roleIds.add(role.get(0).getRoleId());
         }
@@ -130,7 +146,8 @@ public class UserServiceImpl implements UserService {
             logger.info("user table has same as userName");
             return false;
         }
-        int statue = userDao.insert(user);
+        //添加用户，有选择添加（如有字段为空该字段为默认）
+        int statue = userDao.insertSelective(user);
         if (statue == 0) {
             logger.info("insert user error ");
             return false;
@@ -178,7 +195,7 @@ public class UserServiceImpl implements UserService {
         for (UserRole userRoleInfo : userRole) {
             roleId.add(userRoleInfo.getRoleId());
         }
-        System.out.println("用户有几个角色：" + roleId.size());
+        //System.out.println("用户有几个角色：" + roleId.size());
         // 现在得到roleId了，roleId有很多 ，不止一个
         // 也可以先把第一个元素添加进去，然后循环其他的元素，假如roleId>1说明具有很多角色，首先把第一个角色权限信息写进入，然后再循环其他元素假如到的的信息和1不同则添加进去
         // 首先要判断用户到底有几个角色把
@@ -187,6 +204,9 @@ public class UserServiceImpl implements UserService {
             return powerUrls;
         }
         rolePowers = rolePowerDao.selectRolePowerByRoleId(roleId.get(0));
+        if(rolePowers.isEmpty()){
+        	return powerUrls;
+        }
         // 获得权限ID
         for (RolePower rolePowerInfo : rolePowers) {
             powerId.add(rolePowerInfo.getPowerId());
@@ -214,15 +234,28 @@ public class UserServiceImpl implements UserService {
         long numbers = userDao.selectCountOfUser();
         return numbers;
     }
-
+    
+    /**
+     * 条件查询User
+     * 模糊查询
+     */
     @Override
     public List<User> selectUserByPageLimit(UserQueryCondition userQueryCondition) {
         List<User> users = userDao.selectByExample(userQueryCondition);
         List<User> user = new ArrayList<User>();
         // 对查询出来的信息进行筛选 首先需要根据条件 查出roleId，再根据ID 查出所有的用户ID，然后去判断
-        if (!userQueryCondition.getRoleName().isEmpty()) {
-            List<Role> roles = roleDao.selectRoleByName(userQueryCondition.getRoleName());
-            List<UserRole> userRoles = userRoleDao.selectUserRoleByRoleId(roles.get(0).getRoleId());
+        
+        if (userQueryCondition.getRoleName() !=null && !userQueryCondition.getRoleName().isEmpty()) {
+        	RoleQueryCondition role = new RoleQueryCondition();
+        	role.setRoleName(userQueryCondition.getRoleName());
+        	//此处role查询为模糊查询
+        	List<Role> roles = roleDao.selectByLikeRoleName(role);
+//            List<UserRole> userRoles = userRoleDao.selectUserRoleByRoleId(roles.get(0).getRoleId());
+        	List<UserRole> userRoles = new ArrayList<>();
+            for(Role r : roles){
+            	userRoles.addAll(userRoleDao.selectUserRoleByRoleId(r.getRoleId()));
+            }
+            //
             for (User userInfo : users) {
                 for (UserRole userRoleInfo : userRoles) {
                     if (userInfo.getUserId().equals(userRoleInfo.getUserId())) {
@@ -233,7 +266,7 @@ public class UserServiceImpl implements UserService {
         } else {
             user = users;
         }
-        return users;
+        return user;
     }
 
     @Override
@@ -256,5 +289,10 @@ public class UserServiceImpl implements UserService {
         }
 
     }
+
+	@Override
+	public long selectUserCount(UserQueryCondition userQueryCondition) {
+		return  userDao.selectUserCount(userQueryCondition);
+	}
 
 }

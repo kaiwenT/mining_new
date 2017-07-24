@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hust.mining.dao.mapper.DomainTwoMapper">
+  <resultMap id="BaseResultMap" type="com.hust.mining.model.DomainTwo">
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="column" jdbcType="VARCHAR" property="column" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="rank" jdbcType="VARCHAR" property="rank" />
+    <result column="incidence" jdbcType="VARCHAR" property="incidence" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="father_uuid" jdbcType="VARCHAR" property="fatherUuid" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    uuid, url, name, domain_two.column, type, rank, incidence, weight, father_uuid, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.hust.mining.model.DomainTwoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from domain_two
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from domain_two
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from domain_two
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hust.mining.model.DomainTwoExample">
+    delete from domain_two
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hust.mining.model.DomainTwo">
+    insert into domain_two (uuid, url, name, 
+      domain_two.column, type, rank, 
+      incidence, weight, father_uuid, 
+      update_time)
+    values (#{uuid,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{column,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{rank,jdbcType=VARCHAR}, 
+      #{incidence,jdbcType=VARCHAR}, #{weight,jdbcType=INTEGER}, #{fatherUuid,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  
+     <insert id="insertBatch" parameterType="java.util.List">
+    REPLACE into domain_two 
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="column != null">
+        domain_two.column,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="rank != null">
+        rank,
+      </if>
+      <if test="incidence != null">
+        incidence,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="fatherUuid != null">
+        father_uuid,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+       <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{item.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{item.url,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{item.name,jdbcType=VARCHAR},
+      </if>
+      <if test="column != null">
+        #{item.column,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{item.type,jdbcType=VARCHAR},
+      </if>
+      <if test="rank != null">
+        #{item.rank,jdbcType=VARCHAR},
+      </if>
+      <if test="incidence != null">
+        #{item.incidence,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        #{item.weight,jdbcType=INTEGER},
+      </if>
+      <if test="fatherUuid != null">
+        #{item.fatherUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{item.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    </foreach>
+  </insert>
+  
+  <insert id="insertIgnore" parameterType="java.util.List">
+    insert ignore into domain_two 
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="column != null">
+        domain_two.column,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="rank != null">
+        rank,
+      </if>
+      <if test="incidence != null">
+        incidence,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="fatherUuid != null">
+        father_uuid,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+       <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{item.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{item.url,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{item.name,jdbcType=VARCHAR},
+      </if>
+      <if test="column != null">
+        #{item.column,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{item.type,jdbcType=VARCHAR},
+      </if>
+      <if test="rank != null">
+        #{item.rank,jdbcType=VARCHAR},
+      </if>
+      <if test="incidence != null">
+        #{item.incidence,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        #{item.weight,jdbcType=INTEGER},
+      </if>
+      <if test="fatherUuid != null">
+        #{item.fatherUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{item.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    </foreach>
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.hust.mining.model.DomainTwo">
+    insert into domain_two
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="column != null">
+        domain_two.column,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="rank != null">
+        rank,
+      </if>
+      <if test="incidence != null">
+        incidence,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="fatherUuid != null">
+        father_uuid,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="column != null">
+        #{column,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="rank != null">
+        #{rank,jdbcType=VARCHAR},
+      </if>
+      <if test="incidence != null">
+        #{incidence,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="fatherUuid != null">
+        #{fatherUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hust.mining.model.DomainTwoExample" resultType="java.lang.Long">
+    select count(*) from domain_two
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update domain_two
+    <set>
+      <if test="record.uuid != null">
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null">
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.column != null">
+        domain_two.column = #{record.column,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rank != null">
+        rank = #{record.rank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.incidence != null">
+        incidence = #{record.incidence,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weight != null">
+        weight = #{record.weight,jdbcType=INTEGER},
+      </if>
+      <if test="record.fatherUuid != null">
+        father_uuid = #{record.fatherUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update domain_two
+    set uuid = #{record.uuid,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      domain_two.column = #{record.column,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      rank = #{record.rank,jdbcType=VARCHAR},
+      incidence = #{record.incidence,jdbcType=VARCHAR},
+      weight = #{record.weight,jdbcType=INTEGER},
+      father_uuid = #{record.fatherUuid,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hust.mining.model.DomainTwo">
+    update domain_two
+    <set>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="column != null">
+        domain_two.column = #{column,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="rank != null">
+        rank = #{rank,jdbcType=VARCHAR},
+      </if>
+      <if test="incidence != null">
+        incidence = #{incidence,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="fatherUuid != null">
+        father_uuid = #{fatherUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hust.mining.model.DomainTwo">
+    update domain_two
+    set url = #{url,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      domain_two.column = #{column,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      rank = #{rank,jdbcType=VARCHAR},
+      incidence = #{incidence,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=INTEGER},
+      father_uuid = #{fatherUuid,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

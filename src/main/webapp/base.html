@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>四川电信集团舆情信息挖掘系统</title>
+<link rel="stylesheet" href="css/loading.css">
+<link rel="stylesheet" href="css/page.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script type="text/javascript" src="js/dateformat.js"></script>
+</head>
+<body>
+	<div class="main">
+		<!-- <iframe src="g_header.html" width="1000px " height="177px"></iframe>  -->
+		<!--  头部 -->
+		<div id="header">
+			<div class="top">
+				<span class="b_tit">四川电信舆情信息挖掘系统</span> <span class="s_tit">您好，<i></i>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间：<script>
+						document.write(new Date().format('yyyy-MM-dd'));
+					</script> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;"
+					onclick="exit()">退出</a></span>
+			</div>
+		</div>
+		<div class="content">
+			<!--  <iframe src="g_left.html" width="200px " height="760px"></iframe>  -->
+
+			<div class="left float_l">
+				<div class="tit_bar sb01">任务列表管理</div>
+				<ul>
+
+					<li><a href="create_topic">创建任务</a></li>
+					<li><a href="topic_list">自有任务表</a></li>
+					<li><a href="topic_list_all">全局任务表</a></li>
+				</ul>
+				<div class="tit_bar sb03">挖掘环境配置</div>
+				<ul>
+					<li><a href="stopword_infor">停用词管理</a></li>
+					<li><a href="website_infor">映射表管理</a></li>
+					<li><a href="weight_infor">权重表管理</a></li>
+					<li><a href="type_infor">类型管理</a></li>
+					<li><a href="algorithm_test">算法容器</a></li>
+				</ul>
+				<div class="tit_bar sb02">权限管理</div>
+				<ul>
+					<li><a href="user_infor">用户管理</a></li>
+					<li><a href="role_infor">角色管理</a></li>
+					<li><a href="power_infor">资源管理</a></li>
+				</ul>
+				<div class="tit_bar sb04">账号管理</div>
+				<ul>
+					<li><a href="personal_infor">个人信息</a></li>
+					<li><a href="password_change">更改密码</a></li>
+				</ul>
+			</div>
+			<div class="right float_r"></div>
+			<div class="clear"></div>
+		</div>
+		<!-- <iframe src="g_footer.html" width="1000px" height="80px"></iframe>  -->
+
+		<div class="copyright">合作单位：华中科技大学网络与技术中心大数据课题组&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址：湖北省武汉市华中科技大学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮政编码：430074&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电话：027-87556514</div>
+	</div>
+</body>
+
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/loading.js"></script>
+<script type="text/javascript" src="js/waiting.js"></script>
+<script type="text/javascript" src="js/page.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+
+<script type="text/javascript">
+	bootstrapButton = $.fn.button.noConflict();
+	$.fn.bootstrapBtn = bootstrapButton;
+	/*	$(window).scroll(function() {
+	 var scrollHeight = $(window).scrollTop();
+	 var sideHeight = $('#header').height(); //header的高度
+	 var r_offL = $(".right").offset().left; //右边内容栏到浏览器左边的距离
+	 var r_offT = $(".right").offset().top; //右边内容栏到浏览器顶部的距离
+	 var rightH = $('.right').height(); //右边内容的高度
+	 var l_offL = $(".left").offset().left; //左边导航栏到浏览器左边的距离
+	 var leftH = $('.left').height(); //左边内容栏的高度
+	 var l_offT = $('.left').offset().top; //左边内容栏到浏览器顶部的距离
+	 var windowH = $(window).height();
+
+	 if (scrollHeight < sideHeight) {
+
+	 $('.right').css({
+	 'position' : 'static'
+	 });
+
+	 $('.left').css({
+	 'position' : 'static'
+	 });
+
+	 } else if (scrollHeight >= sideHeight && scrollHeight + windowH < l_offT + leftH + 10) {
+
+	 $('.right').css({
+	 'position' : 'fixed',
+	 left : r_offL + 'px',
+	 top : '10px'
+	 });
+
+	 $('.left').css({
+	 'position' : 'static'
+	 });
+
+	 } else if (rightH == leftH && windowH + scrollHeight >= l_offT + leftH + 10) {
+
+	 $('.right').css({
+	 'position' : 'static'
+	 })
+
+	 $('.left').css({
+	 'position' : 'static'
+	 })
+	 }
+
+	 else if (rightH > leftH && windowH + scrollHeight >= l_offT + leftH + 10 && windowH + scrollHeight < rightH + r_offT + 10) {
+	 //如果继续下滑的时候右边内容高度大于左边导航栏高度，则让左侧导航栏固定
+
+	 $('.right').css({
+	 'position' : 'static'
+	 })
+
+	 $('.left').css({
+	 'position' : 'fixed',
+	 top : windowH - leftH - 10 + 'px',
+	 left : l_offL + 'px'
+	 })
+
+	 } else if (windowH + scrollHeight >= rightH + r_offT + 10 && rightH > leftH) {
+
+	 $('.left').css({
+	 'position' : 'absolute',
+	 top : rightH + r_offT - leftH + 'px',
+	 left : l_offL + 'px'
+	 })
+
+	 }
+	 });*/
+
+	function baseAjax(item) {
+		if (item == "index") {
+			exit();
+		} else if(item == "error"){
+			window.parent.location.href = "/error.html";
+		} else {
+			$.ajax({
+				type : "get",
+				url : item + ".html",
+				async : false,
+				dataType : "html",
+				data : '',
+				success : function(data) {
+					if(data=="error"){
+						window.parent.location.href = "/index.html";
+					}else{
+					$(".right").empty().html(data);
+					}
+				},
+				error : function() {
+					alert("ajax加载失败！");
+				}
+			});
+			title = document.title;
+			console.log(title + "--------------------------")
+			history.pushState({
+				title : title
+			}, title, "?href=" + item);
+		}
+
+	}
+
+	var eleMenus = $(".left a").click(function(e) {
+		var e = e || window.event;
+		e.preventDefault();
+		if (history.pushState) {
+
+			$(".left ul li ").removeClass("current");
+			$(this).parent().addClass("current").siblings().removeClass("current"); //点击时左侧导航项换色
+
+			$.ajax({
+				type : "get",
+				url : this.href + ".html",
+				async : false,
+				dataType : "html",
+				data : '',
+				success : function(data) {
+					if(data=="error"){
+						window.parent.location.href = "/index.html";
+					}else{
+						$(".right").empty().html(data);
+					}
+				},
+				error : function() {
+					alert("ajax加载失败！");
+				}
+
+			});
+			var title = $(this).text();
+			/* document.title=title;*/
+			if (e && /\d/.test(e.button)) {
+				history.pushState({
+					title : title
+				}, title, "?href=" + this.href.slice(this.href.lastIndexOf('/') + 1));
+			}
+
+		}
+
+		return false;
+	})
+
+	var pageTrigger = function(target) {
+
+		var query = location.href.split('?href=')[1], eleTarget = target || null;
+
+		if (typeof query != "undefined") {
+			query = query.split('#')[0];
+		}
+
+		/*if(typeof query != "undefined") {
+		  query=query.split('&')[0];
+		}    */
+
+		if (typeof query == "undefined") {
+			if (eleTarget = eleMenus.get(1)) {
+				history.replaceState(null, document.title, "?href=" + eleTarget.href.slice(eleTarget.href.lastIndexOf('/') + 1));
+				pageTrigger(eleTarget); //直接触发click事件
+
+			}
+		} else {
+			eleMenus.each(function() {
+				//为popstate 事件准备的····
+				if (eleTarget === null && this.href.slice(this.href.lastIndexOf('/') + 1) === query) {
+					eleTarget = this;//popsate到之前的页面，必须要触发相应的点击事件，所以确定是那个a元素
+				}
+			});
+
+			if (!eleTarget) { //如果当前元素仍不存在,自己调用,则可能是其他的button跳转
+				/* history.replaceState(null, document.title, "");    
+				 pageTrigger();*/
+				$.ajax({
+					type : "get",
+					url : query + ".html",
+					async : false,
+					dataType : "html",
+					data : '',
+					success : function(data) {
+						if(data=="error"){
+							window.parent.location.href = "/index.html";
+						}else{
+						$(".right").empty().html(data);
+						}
+					},
+					error : function() {
+						alert("ajax加载失败！");
+					}
+				});
+
+				if (event && /\d/.test(event.button)) {
+					history.pushState({
+						title : title
+					}, title, "?href=" + query);
+				}
+
+			} else {
+				console.log(eleTarget);
+				$(eleTarget).trigger("click");
+			}
+		}
+	}
+
+	if (history.pushState) { //如果浏览器支持history的pushstate属性,在前进后退的时候直接触发pageTrigger事件
+		window.addEventListener("popstate", function() {
+			pageTrigger();
+
+		});
+		// 默认载入
+		pageTrigger();
+	}
+
+	function user() {
+		$.ajax({
+			url : "/getCurrentUser",
+			type : "post",
+			data : "",
+			success : function(msg) {
+				if (msg.status == 'OK') {
+					var user = msg.result;
+					$(function() {
+						$('.s_tit i').append(user);
+					});
+				} else {
+					alert("fail");
+				}
+				//document.write(user);
+			},
+			error : function() {
+				alert("失败");
+			}
+		});
+		//window.onload = user();
+	}
+	user()
+	function exit() {
+		$.ajax({
+			url : "/logout",
+			type : "post",
+			data : "",
+			success : function(msg) {
+				window.parent.location.href = "/index.html";
+			},
+			error : function() {
+				alert("请求失败");
+				window.parent.location.href = "/index.html";
+			}
+		});
+	}
+</script>
+</html>

@@ -44,14 +44,8 @@ $(function() {
                     contentType : false,
                     mimeType : "multipart/form-data",
                     data : fd,
-                    beforeSend : function() {
-                        begin();
-                    },
                     success : function(response) {
                         reSetView(response, filename, fileArray.length);
-                    },
-                    complete : function() {
-                        stop();
                     },
                     error : function() {
                         alert("预览失败");
@@ -74,37 +68,38 @@ function reSetView(response, filename, index) {
     var array = msg.result;
     var date_ = new Date();
     var now_time = date_.toLocaleDateString();// 当前日期
-    var li_context = '<li>文件：<input type="text" class="files_name"  name="'
+    var li_context = '<li>文件：<input type="text" class="files_name form-control" style="width:110px;" name="'
             + index
             + '" value="'
             + filename
-            + '" /> URL：<select class="select01">'
+            + '" /> URL：<select class="select01  form-control">'
             + getSpinner(array, '链接|网址')
-            + '</select>标题：<select class="select02">'
+            + '</select>标题：<select class="select02  form-control">'
             + getSpinner(array, '标题|内容')
-            + '</select> 时间：<select class="select03">'
+            + '</select> 时间：<select class="select03  form-control">'
             + getSpinner(array, '发布时间|发贴时间|时间')
-            + '</select> 类型：<select class="select04"><option> 微博</option><option selected = true> 新闻</option></select><img src="images/delete.png" class="btn_up_del02" /><img src="images/up.png" class="btn_up_del01" /></li>'
+            + '</select> 类型：<select class="select04  form-control"><option> 微博</option><option selected = true> 新闻</option></select><button type="button" class="btn btn-danger btn_up_del02">删除</button><button type="button" class="btn btn-primary btn_up_del01">上传</button></li>'
     $("#file_ul").append(li_context);
     $("#file_ul").css("border", "2px solid blue");
+    $("#file_ul").css("border-radius", "5px");
+    $("#file_ul").css("padding", "0 5px");
     up_del();
     all_up();
 }
 function getSpinner(array, regex) {
-    var patt = new RegExp(regex); // 注意是非全局匹配
-    var item = "";
-    var alreay = false;
-    for (var i = 0; i < array.length; i++) {
-        if (patt.test(array[i]) && alreay == false) {
-            item += '<option value= ' + i + ' selected = true>' + array[i]
-                    + '</option>';
-            alreay = true;
-        } else {
-            item += '<option value= ' + i + '>' + array[i] + '</option>';
-        }
-    }
-    item += "";
-    return item;
+	var patt = new RegExp(regex); // 注意是非全局匹配
+	var item = "";
+	var alreay = false;
+	for (var i = 0; i < array.length; i++) {
+		if (patt.test(array[i]) && alreay == false) {
+			item += '<option value= ' + i + ' selected = true>' + array[i] + '</option>';
+			alreay = true;
+		} else {
+			item += '<option value= ' + i + '>' + array[i] + '</option>';
+		}
+	}
+	item += "";
+	return item;
 }
 
 var data12 = {
@@ -128,12 +123,12 @@ function up_del() {
                         .val();
                 var sourceType = $(this).parent("li").children(
                         "select.select04").val();
-                console.log(arrary);
-                console.log(fileName);
-                console.log(time);
-                console.log(urlIndex);
-                console.log(titleIndex);
-                console.log(sourceType);
+ //               console.log(arrary);
+ //               console.log(fileName);
+ //               console.log(time);
+ //               console.log(urlIndex);
+ //               console.log(titleIndex);
+ //               console.log(sourceType);
                 /* cookie_value1="'"+item.fileId+"'"; */
                 upFile(fileArray[parseInt(arrary)], urlIndex, titleIndex, time,
                         sourceType);
@@ -166,11 +161,11 @@ function all_up() {
             var titleIndex = liGroup.eq(i).children("select.select02").val();
             var time = liGroup.eq(i).children("select.select03").val();
             var sourceType = liGroup.eq(i).children("select.select04").val();
-            console.log(num);
-            console.log(time);
-            console.log(urlIndex);
-            console.log(titleIndex);
-            console.log(sourceType);
+ //           console.log(num);
+ //           console.log(time);
+ //           console.log(urlIndex);
+ //           console.log(titleIndex);
+ //           console.log(sourceType);
             upFile(file, urlIndex, titleIndex, time, sourceType);
         }
         localRefresh();
@@ -184,7 +179,8 @@ function upFile(filex, urlIndex, titleIndex, time, sourceType) {
     form.append("titleIndex", titleIndex);
     form.append("timeIndex", time);
     form.append("sourceType", sourceType);
-
+ //   console.log("(((((");
+ //   console.log(form);
     $.ajax({
         async : false,
         crossDomain : true,
@@ -194,9 +190,6 @@ function upFile(filex, urlIndex, titleIndex, time, sourceType) {
         contentType : false,
         mimeType : "multipart/form-data",
         data : form,
-        beforeSend : function() {
-            begin();
-        },
         success : function(response) {
             var msg = JSON.parse(response);
             if (msg.status == "OK") {
@@ -206,9 +199,6 @@ function upFile(filex, urlIndex, titleIndex, time, sourceType) {
             } else {
                 alert("上传失败");
             }
-        },
-        complete : function() {
-            stop();
         },
         error : function() {
             alert("预览失败");
@@ -226,5 +216,7 @@ function border() {
         $("#file_ul").css("border", "none");
     } else {
         $("#file_ul").css("border", "2px solid blue");
+        $("#file_ul").css("border-radius", "5px");
+        $("#file_ul").css("padding", "0 5px");
     }
 }

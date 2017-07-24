@@ -24,6 +24,8 @@ public interface RoleService {
 	boolean deletePowerOfRole(int roleId, List<String> powerName);
 
 	List<Role> selectNotHaveRole(int roleId);
+	
+	long selectRoleCount(String roleName);
 
 	List<Power> notIncludePowers(int roleId);
 

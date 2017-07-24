@@ -6,11 +6,17 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.ansj.domain.Result;
 import org.ansj.recognition.impl.FilterRecognition;
 import org.ansj.splitWord.analysis.NlpAnalysis;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hust.mining.dao.StopwordDao;
+import com.hust.mining.dao.mapper.StopwordMapper;
+import com.hust.mining.model.Stopword;
 import com.hust.mining.service.SegmentService;
 
 @Service
@@ -18,13 +24,35 @@ public class SegmentServiceImpl implements SegmentService {
     /**
      * Logger for this class
      */
+
     private static final Logger logger = LoggerFactory.getLogger(SegmentServiceImpl.class);
 
     private static FilterRecognition filter = new FilterRecognition();
+
     static {
         filter.insertStopNatures("w", "u", "mq", "p", "e", "y", "o");
+       
     }
-
+  
+    public static void addStopwords(List<String> list){    	
+     	//System.out.println("==============="+list.size());
+     	filter.insertStopWords(list);
+     	logger.info("=====================添加停用词成功==========================");
+    }
+    
+    @Autowired
+    public SegmentServiceImpl(StopwordDao stopwordDao) {
+		// TODO Auto-generated constructor stub
+    	super();   
+    	List<String> list = stopwordDao.selectAllStopword();
+    	addStopwords(list);
+	}
+    
+    public SegmentServiceImpl() {
+		// TODO Auto-generated constructor stub
+    	super();    	
+	}
+   
     @Override
     public String[] getSegresult(String str) {
         Result res;
@@ -32,7 +60,8 @@ public class SegmentServiceImpl implements SegmentService {
             res = NlpAnalysis.parse(str).recognition(filter);
         } catch (Exception e) {
             // TODO Auto-generated catch block
-            System.out.println(e.toString() + "\t" + str);
+        	logger.info(e.toString() + "\t" + str);
+            //System.out.println(e.toString() + "\t" + str);
             return new String[] { "失败" };
         }
         String[] words = new String[res.size()];

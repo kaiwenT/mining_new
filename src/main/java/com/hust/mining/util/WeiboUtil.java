@@ -90,11 +90,11 @@ public class WeiboUtil {
         list.add(row4);
         filter(list);
         for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i)[0]);
+            //System.out.println(list.get(i)[0]);
         }
         
         String[] row = new String[2];
         row[1] = "dfdf";
-        System.out.println(Arrays.toString(row));
+        //System.out.println(Arrays.toString(row));
     }
 }

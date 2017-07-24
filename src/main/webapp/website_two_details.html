@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>映射表管理——编辑映射表</title>
+	<script type="text/javascript" src="js/website.js"></script>
+<script type="text/javascript" src="js/website_details.js"></script>
+</head>
+<body>
+	<div class="s_nav">
+		当前位置： <a href="javascript:;" onclick="baseAjax('website_infor')">映射表管理</a> >>编辑映射表
+	</div>
+	<div class="user_infor">
+		<form>
+			<table width="500" border="0" class="change_tab">
+				<tr>
+					<td width="117" height="50">域名：</td>
+					<td width="323" height="50"><input type="text" class="form-control" id="url" disabled="disabled" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="50">名称：</td>
+					<td width="323" height="50"><input type="text" class="form-control" disabled="disabled"
+													   id="new_name" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="50">栏目：</td>
+					<td width="323" height="50"><input type="text" class="form-control" disabled="disabled"
+													   id="new_column" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="50">类型：</td>
+					<td width="323" height="50"><input type="text" class="form-control" disabled="disabled"
+													   id="new_type" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="50">级别：</td>
+					<td width="323" height="50"><input type="text" class="form-control" disabled="disabled"
+													   id="new_rank" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="50">影响范围：</td>
+					<td width="323" height="50"><input type="text" class="form-control" disabled="disabled"
+													   id="new_incidence" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="50">权重：</td>
+					<td width="323" height="50"><input type="text" class="form-control" disabled="disabled"
+													   id="new_weight" /></td>
+				</tr>
+				<tr>
+					<td width="117" height="50">
+						父域名：
+					</td>
+					<td id="super_domain" width="373" height="50">
+
+					</td>
+				</tr>
+				<tr>
+					<td width="117" height="70">
+						<button id="btn_edit" type="button"  class="btn btn-primary" onclick="websiteInforEdit()" >编辑</button>
+						<button id="btn_submit" type="button"  class="btn btn-primary" onclick="domainTwoInfoChange()" style="display: none">提交</button>
+					</td>
+					<td width="323" height="70">
+						<button type="button"  class="btn btn-primary" onclick="back()">返回</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+<script>
+	var uuid = getCookie("domain_id");
+	console.log("-------"+uuid);
+	$.ajax({
+	    type:"post",
+		url:"/domain/selectDomainTwoById",
+		data:{
+	      uuid:uuid  
+		},
+		datatype:"json",
+		success:function (msg) {
+            $("#super_domain").html("");
+			if(msg.status=="OK"){
+				one = msg.result.one;
+				two = msg.result.two;
+				$("#url").val(two.url);
+				$("#new_name").val(two.name);
+                $("#new_column").val(two.column);
+                $("#new_type").val(two.type);
+                $("#new_rank").val(two.rank);
+                $("#new_incidence").val(two.incidence);
+                $("#new_weight").val(two.weight);
+				row = '<p data-id="'+one.uuid+'">'
+                        +'<span style="width: 170px; display: inline; float: left">'+one.url+'</span>'
+                        +'<span style="width: 120px; display: inline; float: left">'+one.name+'</span>'
+                        + '<span><a href="javascript:" style="margin: 2px 0px; text-decoration:underline" onclick="showOneDetails(this)">详情</a></span>'
+                        +'</p>';
+				$("#super_domain").append(row);
+			}else{
+			    alert("获取详细信息失败！");
+			}
+        },
+        error: function () {
+            alert("数据请求失败");
+        }
+	})
+</script>
+</html>

@@ -3,93 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <title>用户管理——信息显示</title>
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/loading.css">
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/loading.js"></script>
-<script type="text/javascript" src="js/waiting.js"></script>
 <script type="text/javascript" src="js/user.js"></script>
 </head>
 <body>
-	<div class="main">
-		<iframe src="g_header.html" width="1000px" height="177px"></iframe>
-		<div class="content">
-			<iframe src="g_left.html" width="200px" height="740px"></iframe>
-			<div class="right float_r">
-				<div class="s_nav">
-					当前位置：
-					<a href="#">用户管理</a>
-					>>信息显示
-				</div>
-				<div class="user_infor">
-					<table width="710" border="0" class="infor_tab01">
-						<tr>
-							<td width="75" height="50">用户名：</td>
-							<td height="50">
-								<input type="text" id="user_uname">
-							</td>
-							<td width="85" height="50">真实姓名：</td>
-							<td height="50">
-								<input type="text" id="user_tname">
-							</td>
-							<td width="60" height="50">角色：</td>
-							<td height="50">
-								<input type="text" id="user_role">
-							</td>
-						</tr>
-						<tr>
-							<td width="75" height="50">电话：</td>
-							<td height="50">
-								<input type="text" id="user_tel">
-							</td>
-							<td width="85" height="50">邮箱：</td>
-							<td height="50">
-								<input type="text" id="user_email">
-							</td>
-							<td height="50" colspan="2">
-								<button onclick="userInforSearch(1)">搜素</button>
-								<button onClick="userInforAdd()">添加用户</button>
-							</td>
-						</tr>
-					</table>
-					<div class="infor_tablist">
-						<table width="692" border="0" class="infor_tab02">
-							<tr class="infor_tab02_tit">
-								<td width="66" height="40" align="center" bgcolor="#86c6ea">
-									用户<br>编号
-								</td>
-								<td width="64" height="40" align="center" bgcolor="#86c6ea">用户名</td>
-								<td width="66" height="40" align="center" bgcolor="#86c6ea">
-									真实<br>姓名
-								</td>
-								<td width="67" height="40" align="center" bgcolor="#86c6ea">角色</td>
-								<td width="104" height="40" align="center" bgcolor="#86c6ea">电话</td>
-								<td width="157" height="40" align="center" bgcolor="#86c6ea">邮箱</td>
-								<td width="130" height="40" align="center" bgcolor="#86c6ea">操作</td>
-							</tr>
-						</table>
-					</div>
-					<div class="user_num">
-						<input id="up_page" type="button" onclick="changPageOne(-1)"
-							value="上一页" />
-						<input type="button" id="p_1" onclick="pageNumClick(this.id)"
-							value="1" class="cur" />
-						<input type="button" id="p_2" onclick="pageNumClick(this.id)"
-							value="2" />
-						<input type="button" id="p_3" onclick="pageNumClick(this.id)"
-							value="3" />
-						<input type="button" id="other" name="1"
-							onclick="setPageChangeView()" value="..." />
-						<input id="down_page" type="button" onclick="changPageOne(1)"
-							value="下一页" name="1" />
-						<input type="text" class="go_num" />
-						<input type="button" value="跳转" onclick="changePage()" />
-					</div>
-				</div>
-			</div>
-			<div class="clear"></div>
-		</div>
-		<iframe src="g_footer.html" width="1000px" height="80px"></iframe>
+	<div class="s_nav">
+		当前位置： <a href="javascript:;">用户管理</a> >>信息显示
 	</div>
+	<div class="user_infor">
+		<table width="710" border="0" class="infor_tab01">
+			<tr>
+				<td width="75" height="50">用户名：</td>
+				<td height="50"><input type="text" class="form-control" id="user_uname"></td>
+				<td width="85" height="50">真实姓名：</td>
+				<td height="50"><input type="text" class="form-control" id="user_tname"></td>
+				<td width="60" height="50">角色：</td>
+				<td height="50"><input type="text" class="form-control" id="user_role"></td>
+			</tr>
+			<tr>
+				<td width="75" height="50">电话：</td>
+				<td height="50"><input type="text" class="form-control" id="user_tel"></td>
+				<td width="85" height="50">邮箱：</td>
+				<td height="50"><input type="text" class="form-control" id="user_email"></td>
+				<td height="50" colspan="2">
+					<button type="button"  class="btn btn-primary" onclick="initSearchPage(1)">搜 索</button>
+					<button type="button"  class="btn btn-primary" onClick="userInforAdd()">添加用户</button>
+				</td>
+			</tr>
+		</table>
+		<div class="infor_tablist">
+			<table width="692" border="0" class="infor_tab02">
+				<tr class="infor_tab02_tit">
+					<td width="66" height="45" align="center" bgcolor="#86c6ea">
+						用户<br>编号
+					</td>
+					<td width="64" height="45" align="center" bgcolor="#86c6ea">用户名</td>
+					<td width="66" height="45" align="center" bgcolor="#86c6ea">
+						真实<br>姓名
+					</td>
+					<td width="67" height="45" align="center" bgcolor="#86c6ea">角色</td>
+					<td width="104" height="45" align="center" bgcolor="#86c6ea">电话</td>
+					<td width="157" height="45" align="center" bgcolor="#86c6ea">邮箱</td>
+					<td width="130" height="45" align="center" bgcolor="#86c6ea">操作</td>
+				</tr>
+			</table>
+		</div>
+		<div class="user_num">
+			<ul class="page" maxshowpageitem="5" pagelistcount="10" id="page"></ul>
+		</div>
+	</div>
+
 </body>
+
 </html>

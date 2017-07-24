@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>账号管理——个人信息</title>
+<script type="text/javascript" src="js/personal.js"></script>
+</head>
+<body>
+	<div class="s_nav">
+		当前位置： <a href="javascript:;">账号管理</a> >>个人信息
+	</div>
+	<div class="personal_infor">
+		<form>
+			<table width="450" border="0" class="change_tab">
+				<tr>
+					<td width="140" height="50"><div id="tips"></div></td>
+				</tr>
+
+				<tr>
+					<td width="100" height="50">真实姓名：</td>
+					<td width="200" height="50"><input type="text" class="form-control" style="width: 170px;"
+						id="new_trueName" /></td>
+					<td width="140" height="50">&nbsp;</td>
+				</tr>
+				<tr>
+					<td width="100" height="50">电话：</td>
+					<td width="200" height="50"><input type="text" class="form-control" style="width: 170px;"
+						id="new_telphone" /></td>
+					<td width="140" height="50" class="user_warn" id="tel_warn"></td>
+				</tr>
+				<tr>
+					<td width="100" height="50">邮箱：</td>
+					<td width="200" height="50"><input type="email" class="form-control" style="width: 170px;" id="new_email" />
+					</td>
+					<td width="140" height="50" class="user_warn" id="email_warn"></td>
+				</tr>
+
+				<tr>
+					<td width="100" height="70">
+						<button type="button"  class="btn btn-primary" type="button" onclick="personalInforChange()">提交</button>
+					</td>
+					<td width="200" height="70">
+						<button type="button"  class="btn btn-primary" onclick="clearChangeInfor()">重置</button>
+					</td>
+					<td width="140" height="50">&nbsp;</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+
+</body>
+
+</html>

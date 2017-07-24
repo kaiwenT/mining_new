@@ -10,6 +10,8 @@ public interface PowerService {
 	List<Power> selectAllPower(int start, int limit);
 
 	List<Power> selectOnePowerInfo(PowerQueryCondition powerName);
+	
+	long selectPowerCount(String powerName);
 
 	boolean insertPowerInfo(Power power);
 

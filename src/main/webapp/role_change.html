@@ -1,63 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>角色管理——编辑角色</title>
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/loading.css">
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/loading.js"></script>
-	<script type="text/javascript" src="js/waiting.js"></script>
-    <script type="text/javascript" src="js/role.js"></script>
+<meta charset="UTF-8">
+<title>角色管理——编辑角色</title>
+<script type="text/javascript" src="js/role.js"></script>
+<script type="text/javascript" src="js/role_power.js"></script>
 </head>
 <body>
-	<div class="main">
-		<iframe src="g_header.html" width="1000px" height="177px"></iframe>
-		<div class="content">
-			<iframe src="g_left.html" width="200px" height="740px"></iframe>
-			<div class="right float_r">
-				<div class="s_nav">当前位置：<a href="#">角色管理</a>>>编辑角色</div>
-				<div class="user_infor">
-                	<form>
-                      <table width="470" border="0" class="change_tab">
-                          <tr>
-                            <td width="81" height="50">角色名称：</td>
-                            <td width="374" height="50"><input type="text" class="roleChange" id="new_name_role" /></td>
-                          </tr>
-                          <!--<tr>
-                            <td width="81" valign="top" ><br /><br />编辑权限：</td>
-                            <td width="374">
-                            	<div class="role_add_del">
-                                	<table width="400" border="0">
-                                      <tr>
-                                        <td bgcolor="#86c6ea"><input type="checkbox"  />添加用户</td>
-                                        <td bgcolor="#86c6ea"><input type="checkbox"  />删除用户</td>
-                                        <td bgcolor="#86c6ea"><input type="checkbox"  />删除用户</td>
-                                        <td bgcolor="#86c6ea"><input type="checkbox"  />删除用户</td>
-                                      </tr>
-                                    </table>
-                                </div>
-                            </td>
-                          </tr>-->
-                          <tr>
-                            <td width="81" height="80"><a href="javascript:;"><img onclick="changeRole()" src="images/change_submit.png"  class="float_r" /></a></td>
-                            <td width="374" height="80"><a href="javascript:;"><img src="images/change_again.png" onclick="clearNewrole()" class="user_tijiao float_l" /></a></td>
-                            <td width="10" height="80">&nbsp;</td>
-                        </tr>
-                      </table>
-                  </form>
-		  	  </div>
-			</div>
-            <div class="clear"></div>
-		</div>
-        <iframe src="g_footer.html" width="1000px" height="80px"></iframe>
+	<div class="s_nav">
+		当前位置：<a href="javascript:;" onclick="baseAjax('role_infor')">角色管理</a>>>编辑角色
+	</div>
+	<div class="user_infor">
+		<form>
+			<table width="880" border="0" class="change_tab">
+				<tr>
+					<td align="right" colspan="2" width="81" height="50">角色名称：</td>
+					<td width="680" height="50"><input type="text" style="width: 190px;"
+						class="roleChange form-control" id="new_name_role" disabled="disabled"/></td>
+				</tr>
+				<tr>
+					<td align="right" colspan="2" width="81" valign="top"><br />
+						<br />配置权限：</td>
+					<td width="680">
+						<div class="ckht">
+							<div class="up_list_wrap" style="height: 400px">
+								<table width="374" border="0" class="infor_tab02"
+									id="role_power_tab">
+									<tr class="infor_tab02_tit">
+										<td colspan="1" height="40" align="center" valign="middle"
+											bgcolor="#86c6ea" class="d_blue"><input
+											style="width: 19px; height: 25px; padding: 0 0 5px 0;"
+											type="checkbox" class="checkAll" id="check_all_power">&nbsp;&nbsp;序号</td>
+										<td colspan="3" height="40" align="center" valign="middle"
+											bgcolor="#86c6ea" class="d_blue">权限名称</td>
+									</tr>
+
+								</table>
+
+							</div>
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td align="right" colspan="2" width="81" height="80">
+						<button type="button"  class="btn btn-primary" onclick="changeRole()">提交</button>
+					</td>
+					<td align="center" width="600" height="80">
+						<button type="button"  class="btn btn-primary" onclick="clearNewrole()">重置</button>
+					</td>
+				</tr>
+			</table>
+		</form>
 	</div>
 </body>
 <script>
-	var newName=getCookie("role_name");
+	var newName = getCookie("role_name");
 	console.log(newName);
-	var b_cookie=document.getElementById("new_name_role");
-	b_cookie.value=newName;
-	b_cookie.style.color="#999999";
+	var b_cookie = document.getElementById("new_name_role");
+	b_cookie.value = newName;
+//	b_cookie.style.color = "#999999";
 </script>
 </html>

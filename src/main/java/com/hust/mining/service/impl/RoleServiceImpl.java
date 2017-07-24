@@ -106,8 +106,12 @@ public class RoleServiceImpl implements RoleService {
 		return true;
 	}
 
+	/**
+	 * 更新角色信息，包括角色名，以及为角色分配的权限
+	 */
 	@Override
 	public boolean updateRoleInfo(Role role, List<String> powerName) {
+		//更新角色名，如果修改的角色名已存在数据库则返回
 		List<Role> oldRole = roleDao.selectRoleById(role.getRoleId());
 		List<Role> otherRole = roleDao.selectByNotIncluedRoleName(oldRole.get(0).getRoleName());
 		for (Role roleInfo : otherRole) {
@@ -117,49 +121,76 @@ public class RoleServiceImpl implements RoleService {
 			}
 		}
 		int statue = roleDao.updateByPrimaryKeySelective(role);
-		List<RolePower> rolePowers = rolePowerDao.selectRolePowerByRoleId(role.getRoleId());
-		List<Integer> oldPowers = new ArrayList<Integer>();
-		for (RolePower powers : rolePowers) {
-			oldPowers.add(powers.getPowerId());
+		if (statue == 0) {
+			return false;
 		}
-		List<Integer> newPowerInfo = new ArrayList<Integer>();
+		//删除角色对应的所有权限
+		rolePowerDao.deleteRolePowerByRoleId(role.getRoleId());
+		List<Integer> newPowerIds = new ArrayList<Integer>();
+		//查找权限名对应的权限ID集合
 		if (!powerName.isEmpty()) {
 			for (String powerNameInfo : powerName) {
+				//System.out.println(powerNameInfo);
 				List<Power> powers = powerDao.selectPowerByPowerName(powerNameInfo);
-				newPowerInfo.add(powers.get(0).getPowerId());
+				if(powers.isEmpty()){
+					continue;
+				}
+				newPowerIds.add(powers.get(0).getPowerId());
 			}
 		} else {
 			logger.info("power update is empty");
 		}
-		List<Integer> includePowers = new ArrayList<Integer>();
-		List<Integer> notIncludePowers = new ArrayList<Integer>();
-		if (!newPowerInfo.isEmpty()) {
-			for (Integer powerInfo : newPowerInfo) {
-				if (oldPowers.contains(powerInfo)) {
-					includePowers.add(powerInfo);
-				} else {
-					notIncludePowers.add(powerInfo);
-				}
+		RolePower rolep = new RolePower();
+		for(Integer powerId : newPowerIds){			
+			rolep.setRoleId(role.getRoleId());
+			rolep.setPowerId(powerId);
+			//插入角色权限
+			statue = rolePowerDao.insertSelective(rolep);
+			if (statue == 0) {
+				return false;
 			}
 		}
-		if (includePowers.size() < oldPowers.size()) {
-			for (int power : oldPowers) {
-				if (!includePowers.contains(power)) {
-					rolePowerDao.deleteRolePowerById(power, role.getRoleId());
-				}
-			}
-		}
-		if (!notIncludePowers.isEmpty()) {
-			for (int powers : notIncludePowers) {
-				RolePower rolePower = new RolePower();
-				rolePower.setPowerId(powers);
-				rolePower.setRoleId(role.getRoleId());
-				rolePowerDao.insertSelective(rolePower);
-			}
-		}
-		if (statue == 0) {
-			return false;
-		}
+//		List<RolePower> rolePowers = rolePowerDao.selectRolePowerByRoleId(role.getRoleId());
+//		List<Integer> oldPowers = new ArrayList<Integer>();
+//		for (RolePower powers : rolePowers) {
+//			oldPowers.add(powers.getPowerId());
+//		}
+//		List<Integer> newPowerInfo = new ArrayList<Integer>();
+//		if (!powerName.isEmpty()) {
+//			for (String powerNameInfo : powerName) {
+//				List<Power> powers = powerDao.selectPowerByPowerName(powerNameInfo);
+//				newPowerInfo.add(powers.get(0).getPowerId());
+//			}
+//		} else {
+//			logger.info("power update is empty");
+//		}
+//		List<Integer> includePowers = new ArrayList<Integer>();
+//		List<Integer> notIncludePowers = new ArrayList<Integer>();
+//		if (!newPowerInfo.isEmpty()) {
+//			for (Integer powerInfo : newPowerInfo) {
+//				if (oldPowers.contains(powerInfo)) {
+//					includePowers.add(powerInfo);
+//				} else {
+//					notIncludePowers.add(powerInfo);
+//				}
+//			}
+//		}
+//		if (includePowers.size() < oldPowers.size()) {
+//			for (int power : oldPowers) {
+//				if (!includePowers.contains(power)) {
+//					rolePowerDao.deleteRolePowerById(power, role.getRoleId());
+//				}
+//			}
+//		}
+//		if (!notIncludePowers.isEmpty()) {
+//			for (int powers : notIncludePowers) {
+//				RolePower rolePower = new RolePower();
+//				rolePower.setPowerId(powers);
+//				rolePower.setRoleId(role.getRoleId());
+//				rolePowerDao.insertSelective(rolePower);
+//			}
+//		}
+		
 		return true;
 	}
 
@@ -236,12 +267,16 @@ public class RoleServiceImpl implements RoleService {
 		List<Power> notIncludePower = new ArrayList<>();
 		List<Power> powers = powerDao.selectAllPowers();
 		for (Power powerInfo : powers) {
-			for (int powerId : powerIds) {
-				if (powerInfo.getPowerId() != powerId) {
-					notIncludePower.add(powerInfo);
-				}
+//			for (int powerId : powerIds) {
+//				if (powerInfo.getPowerId() != powerId) {
+//					notIncludePower.add(powerInfo);
+//				}
+//			}
+			if(!powerIds.contains(powerInfo.getPowerId())) {
+				notIncludePower.add(powerInfo);
 			}
 		}
+		
 		return notIncludePower;
 	}
 
@@ -265,5 +300,13 @@ public class RoleServiceImpl implements RoleService {
 			}
 		}
 		return includePower;
+	}
+
+	@Override
+	public long selectRoleCount(String roleName) {
+		// TODO Auto-generated method stub
+		RoleQueryCondition role = new RoleQueryCondition();
+		role.setRoleName(roleName);
+		return roleDao.selectRoleCount(role);
 	}
 }

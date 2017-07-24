@@ -1,47 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>资源管理——添加权限</title>
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/loading.css">
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/loading.js"></script>
-	<script type="text/javascript" src="js/waiting.js"></script>
-    <script type="text/javascript" src="js/power.js"></script>
+<meta charset="UTF-8">
+<title>资源管理——添加权限</title>
+<script type="text/javascript" src="js/power.js"></script>
 </head>
 <body>
-	<div class="main">
-		<iframe src="g_header.html" width=1000px" height="177px"></iframe>
-		<div class="content">
-			<iframe src="g_left.html" width=200px" height="740px"></iframe>
-			<div class="right float_r">
-				<div class="s_nav">当前位置：<a href="#">资源管理</a>>>添加权限</div>
-				<div class="user_infor">
-                	<form>
-                      <table width="470" border="0" class="change_tab">
-                          <tr>
-                            <td width="100" height="50">权限名称：</td>
-                            <td width="200" height="50"><input type="text" id="namePower"  /></td>
-                            <td width="160" height="50">&nbsp;</td>
-                        </tr>
-                          <tr>
-                            <td width="100" height="50">资源路径：</td>
-                            <td width="200" height="50"><input type="text" id="urlPower" /></td>
-                            <td width="160" height="50">&nbsp;</td>
-                        </tr>
-                          <tr>
-                            <td width="100" height="80"><a href="javascript:;"><img src="images/change_submit.png"  class="float_r" onClick="addPower()" /></a></td>
-                            <td width="200" height="80"><a href="javascript:;"><img src="images/change_again.png" class="user_tijiao float_l" onClick="clearPower()" /></a></td>
-                            <td width="160" height="80">&nbsp;</td>
-                        </tr>
-                      </table>
-                  </form>
-		  	  </div>
-			</div>
-            <div class="clear"></div>
-		</div>
-        <iframe src="g_footer.html" width="1000px" height="80px"></iframe>
+	<div class="s_nav">
+		当前位置：<a href="javascript:;" onclick="baseAjax('power_infor')">资源管理</a>>>添加权限
+	</div>
+	<div class="user_infor">
+		<form>
+			<table width="470" border="0" class="change_tab">
+				<tr>
+					<td width="100" height="50">权限名称：</td>
+					<td width="200" height="50"><input type="text" class="form-control" style=" width: 190px; " id="namePower" placeholder="请输入权限名称" /></td>
+					<td width="160" height="50">&nbsp;</td>
+				</tr>
+				<tr>
+					<td width="100" height="50">资源路径：</td>
+					<td width="200" height="50"><input type="text" class="form-control" style="width: 190px;" id="urlPower" placeholder="请输入资源路径" /></td>
+					<td width="160" height="50">&nbsp;</td>
+				</tr>
+				<tr>
+					<td width="100" height="80">
+						<button type="button"  class="btn btn-primary" onClick="addPower()">提交</button>
+					</td>
+					<td width="200" height="80">
+						<button type="button"  class="btn btn-primary" onClick="clearPower()">重置</button>
+					</td>
+					<td width="160" height="80">&nbsp;</td>
+				</tr>
+			</table>
+		</form>
 	</div>
 </body>
 </html>

@@ -3,55 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <title>类型管理——添加类型</title>
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/loading.css">
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/loading.js"></script>
-<script type="text/javascript" src="js/waiting.js"></script>
 <script type="text/javascript" src="js/type.js"></script>
 </head>
 <body>
-	<div class="main">
-		<iframe src="g_header.html" width="1000px" height="177px"></iframe>
-		<div class="content">
-			<iframe src="g_left.html" width="200px" height="740px"></iframe>
-			<div class="right float_r">
-				<div class="s_nav">
-					当前位置：
-					<a href="#">类型管理</a>
-					>>添加类型
-				</div>
-				<div class="user_infor">
-					<form>
-						<table width="470" border="0" class="change_tab">
-							<tr>
-								<td width="100" height="50">类型名称：</td>
-								<td width="200" height="50">
-									<input type="text" id="addType" />
-								</td>
-							</tr>
-							<tr>
-								<td width="100" height="80">
-									<a href="javascript:;">
-										<img src="images/change_submit.png" class="float_r"
-											onClick="AddtypeInfor()" />
-									</a>
-								</td>
-								<td width="200" height="80">
-									<a href="javascript:;">
-										<img src="images/change_again.png" class="user_tijiao float_l"
-											onclick="clearType()" />
-									</a>
-								</td>
-								<td width="160" height="80">&nbsp;</td>
-							</tr>
-						</table>
-					</form>
-				</div>
-			</div>
-			<div class="clear"></div>
-		</div>
-		<iframe src="g_footer.html" width="1000px" height="80px"></iframe>
+
+	<div class="s_nav">
+		当前位置： <a href="javascript:;" onclick="baseAjax('type_infor')">类型管理</a> >>添加类型
+	</div>
+	<div class="user_infor">
+		<form>
+			<table width="470" border="0" class="change_tab">
+				<tr>
+					<td width="100" height="50">类型名称：</td>
+					<td width="200" height="50"><input type="text" class="form-control" id="addType" />
+					</td>
+				</tr>
+				<tr>
+					<td width="100" height="80">
+						<button type="button"  class="btn btn-primary" onClick="AddtypeInfor()">提交</button>
+						</td>
+					<td width="200" height="80">
+						<button type="button"  class="btn btn-primary" onclick="clearType()">重置</button>
+					</td>
+					<td width="160" height="80">&nbsp;</td>
+				</tr>
+			</table>
+		</form>
 	</div>
 </body>
 </html>

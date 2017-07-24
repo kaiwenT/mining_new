@@ -27,6 +27,12 @@ public class FileDao {
     @Autowired
     private IssueFileMapper issueFileMapper;
 
+    /**
+     * 写入文件到 upload文件夹 即存放上传的文件，并更新IssueFile数据库记录
+     * @param file 文件的基本信息
+     * @param content 文件内容 来源与upload文件，包含标题
+     * @return
+     */
     public int insert(IssueFile file, List<String[]> content) {
         String filename = DIRECTORY.FILE + file.getFileId();
         try {
@@ -47,8 +53,13 @@ public class FileDao {
         return 0;
     }
 
+    /**
+     * 读取excel文件的内容，包含标题栏
+     * @param filenames 需要读取内容的文件名（可以为单个，也可以为集合）
+     * @return
+     */
     public List<String[]> getFileContent(String...filenames) {
-        List<String[]> content = FileUtil.read(filenames);
+        List<String[]> content = FileUtil.readForUnificating(filenames);
         return content;
     }
 
@@ -86,4 +97,9 @@ public class FileDao {
         example.setOrderByClause("upload_time desc");
         return issueFileMapper.selectByExample(example);
     }
+    
+    public List<String[]> getContentById(String path, String name) {
+		// TODO Auto-generated method stub
+		return FileUtil.read(path+name);
+	}
 }

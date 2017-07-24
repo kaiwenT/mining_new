@@ -38,7 +38,20 @@ public class RoleController {
 		}
 		return ResultUtil.success(roles);
 	}
-
+	
+	@ResponseBody
+	@RequestMapping("/selectRoleInfoCount")
+	public Object selectRoleInfoCount(@RequestParam(value = "roleName", required = false) String roleName
+			, HttpServletRequest request) {
+		long count = 0;
+		
+		count = roleService.selectRoleCount(roleName);
+		
+		if(count <= 0){
+			return ResultUtil.errorWithMsg("未找到相关角色信息！");
+		}
+		return ResultUtil.success(count);
+	}
 	@ResponseBody
 	@RequestMapping("/selectNotIncluedRole")
 	public Object selectNotIncludeRole(@RequestParam(value = "roleId") int roleId) {
